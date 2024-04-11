@@ -1,3 +1,6 @@
+import Signup from '../components/Signup'
+import Login from '../components/login'
+
 function Landing() {
   return (
     <html lang="en">
@@ -5,8 +8,8 @@ function Landing() {
         <div className="flex justify-end">
           {/* <Login />
       <Register /> */}
-          <button>Sign up</button>
-          <button>Log in</button>
+          <Signup />
+          <Login />
         </div>
         <div className=" flex flex-col  content-center justify-center">
           <div className="flex justify-center">
@@ -17,8 +20,7 @@ function Landing() {
             />
           </div>
           <div className="m-10 flex justify-center">
-            {/* <Register/> */}
-            <button> Sign Up</button>
+            <Signup />
           </div>
           <div className="flex justify-around">
             <div className="flex w-1/3 flex-col flex-wrap content-center">
