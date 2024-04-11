@@ -21,17 +21,29 @@ function Landing() {
             <button> Sign Up</button>
           </div>
           <div className="flex justify-around">
-            <div>
-              <h1>image</h1>
-              <p>paragraph</p>
+            <div className="flex w-1/3 flex-col flex-wrap content-center">
+              <img
+                src="Public/images/recipebook.jpg"
+                alt="recipe book"
+                className="b-2 max-h-70 w-3/4"
+              />
+              <p>All your recipes in one place!</p>
             </div>
-            <div>
-              <h1>image</h1>
-              <p>paragraph</p>
+            <div className="flex w-1/3 flex-col flex-wrap content-center">
+              <img
+                src="Public/images/dinnertable.jpg"
+                alt="recipe book"
+                className="b-2 max-h-70 w-3/4"
+              />
+              <p>More time to relax with the family!</p>
             </div>
-            <div>
-              <h1>image</h1>
-              <p>paragraph</p>
+            <div className="flex w-1/3 flex-col flex-wrap content-center">
+              <img
+                src="Public/images/shopping.jpg"
+                alt="recipe book"
+                className="b-2 max-h-70 w-3/4"
+              />
+              <p>Shopping lists made easy</p>
             </div>
           </div>
         </div>
