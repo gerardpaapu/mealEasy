@@ -1,7 +1,7 @@
 function Landing() {
   return (
     <html lang="en">
-      <body className="layout-body min-h-screen w-screen">
+      <body className="landing-body min-h-screen w-screen">
         <div className="flex justify-end">
           {/* <Login />
       <Register /> */}
