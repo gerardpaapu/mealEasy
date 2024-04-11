@@ -3,5 +3,14 @@
 @tailwind utilities;
 
 .landing-body {
+
+  background-color: #7bb44d;
+}
+
+.layout-body {
+  background-color: #f8fdf0;
+}
+
+.footer-bg-color {
   background-color: #7bb44d;
 }
