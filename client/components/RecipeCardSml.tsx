@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 export default function RecipeCardSml() {
   const [selectedMeal, setSelectedMeal] = useState(null)
+  const [selectedItems, setSelectedItems] = useState([])
 
   const meals = [
     {
@@ -23,6 +24,11 @@ export default function RecipeCardSml() {
 
   const handleSelectMeal = (index) => {
     setSelectedMeal(index)
+    if (selectedItems.includes(index)) {
+      setSelectedItems(selectedItems.filter((item) => item !== index)) //if there is index in the array - remove it
+    } else {
+      setSelectedItems([...selectedItems, index]) //if the index is not in the array - add it
+    }
   }
 
   return (
@@ -31,8 +37,21 @@ export default function RecipeCardSml() {
         <button
           key={index}
           onClick={() => handleSelectMeal(index)}
-          className={`card card-compact m-4 w-96 bg-base-100 shadow-xl ${selectedMeal === index ? 'border-4 border-green-500' : ''}`}
+          className={`card card-compact relative m-4 w-96 bg-base-100 shadow-xl ${selectedMeal === index ? 'border-4 border-green-500' : ''}`}
         >
+          {selectedItems.includes(index) && (
+            <div className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full">
+              <div className="form-control">
+                <label className="label cursor-pointer">
+                  <input
+                    type="checkbox"
+                    defaultChecked
+                    className="checkbox-primary checkbox"
+                  />
+                </label>
+              </div>
+            </div>
+          )}
           <figure>
             <img className="h-40 w-64" src={meal.image} alt={meal.name} />
           </figure>
