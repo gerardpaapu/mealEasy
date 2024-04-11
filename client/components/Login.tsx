@@ -6,6 +6,7 @@ function Login() {
   function handleLogin() {
     loginWithRedirect({
       authorizationParams: {
+        screen_hint: 'login',
         redirect_uri: `${window.location.origin}/home`,
       },
     })
