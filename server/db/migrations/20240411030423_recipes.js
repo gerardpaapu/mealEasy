@@ -3,6 +3,7 @@ export async function up(knex) {
     table.increments('id').primary()
     table.string('name')
     table.string('image')
+    table.string('ingredients')
   })
 }
 

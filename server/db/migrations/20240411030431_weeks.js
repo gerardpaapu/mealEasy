@@ -9,8 +9,8 @@ export async function up(knex) {
     table.integer('friday').references('recipes.id')
     table.integer('saturday').references('recipes.id')
     table.integer('sunday').references('recipes.id')
-    table.integer('created')
-   })
+    table.integer('created_on')
+  })
 }
 
 export async function down(knex) {

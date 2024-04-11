@@ -9,7 +9,7 @@ export async function seed(knex) {
       friday: 7,
       saturday: 6,
       sunday: 1,
-      created: '11/04/2023'
+      created_on: 1712810143,
     },
   ])
 }
