@@ -1,4 +1,8 @@
+import React, { useState } from 'react'
+
 export default function RecipeCardSml() {
+  const [selectedMeal, setSelectedMeal] = useState(null)
+
   const meals = [
     {
       name: 'Butter Chicken',
@@ -17,12 +21,17 @@ export default function RecipeCardSml() {
     },
   ]
 
+  const handleSelectMeal = (index) => {
+    setSelectedMeal(index)
+  }
+
   return (
     <div className="flex flex-wrap justify-center">
       {meals.map((meal, index) => (
-        <div
+        <button
           key={index}
-          className="card card-compact m-4 w-96 bg-base-100 shadow-xl"
+          onClick={() => handleSelectMeal(index)}
+          className={`card card-compact m-4 w-96 bg-base-100 shadow-xl ${selectedMeal === index ? 'border-4 border-green-500' : ''}`}
         >
           <figure>
             <img className="h-40 w-64" src={meal.image} alt={meal.name} />
@@ -30,11 +39,8 @@ export default function RecipeCardSml() {
           <div className="card-body">
             <h2 className="card-title">{meal.name}</h2>
             <p>Some description about the meal goes here.</p>
-            <div className="card-actions justify-end">
-              <button className="btn btn-primary">+</button>
-            </div>
           </div>
-        </div>
+        </button>
       ))}
     </div>
   )
