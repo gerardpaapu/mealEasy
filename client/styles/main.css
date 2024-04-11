@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.layout-body {
+.landing-body {
   background-color: #7bb44d;
 }
