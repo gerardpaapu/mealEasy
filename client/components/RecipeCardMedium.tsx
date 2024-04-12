@@ -59,36 +59,48 @@ export default function RecipeCardMedium() {
     }
   }
 
+  const isMealSelected = (index) => selectedItems.includes(index)
+  const isSelectionFull = selectedItems.length >= 7
+
   return (
-    <div className="flex flex-wrap justify-center">
-      {meals.map((meal, index) => (
-        <button
-          key={index}
-          onClick={() => handleSelectMeal(index)}
-          className={`card card-compact relative m-4 w-96 bg-base-100 shadow-xl ${selectedItems.includes(index) ? 'border-4 border-green-500' : ''}`}
-        >
-          {selectedItems.includes(index) && (
-            <div className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border-green-500">
-              <div className="form-control">
-                <label className="label cursor-pointer">
-                  <input
-                    type="checkbox"
-                    defaultChecked
-                    className="checkbox-primary checkbox"
-                  />
-                </label>
+    <div>
+      <div className="flex flex-wrap justify-center">
+        {meals.map((meal, index) => (
+          <button
+            key={index}
+            onClick={() => handleSelectMeal(index)}
+            className={`card card-compact relative m-4 w-96 bg-base-100 shadow-xl ${
+              isMealSelected(index) ? 'border-4 border-green-500' : ''
+            } ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
+          >
+            {isMealSelected(index) && (
+              <div className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border-green-500">
+                <div className="form-control">
+                  <label className="label cursor-pointer">
+                    <input
+                      type="checkbox"
+                      defaultChecked
+                      className="checkbox-primary checkbox"
+                    />
+                  </label>
+                </div>
               </div>
+            )}
+            <figure>
+              <img className="h-40 w-64" src={meal.image} alt={meal.name} />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title">{meal.name}</h2>
+              <p>Some description about the meal goes here.</p>
             </div>
-          )}
-          <figure>
-            <img className="h-40 w-64" src={meal.image} alt={meal.name} />
-          </figure>
-          <div className="card-body">
-            <h2 className="card-title">{meal.name}</h2>
-            <p>Some description about the meal goes here.</p>
-          </div>
-        </button>
-      ))}
+          </button>
+        ))}
+      </div>
+      {isSelectionFull && (
+        <p className="mt-4 text-center text-red-500">
+          You have selected seven meals. You cannot select more.
+        </p>
+      )}
     </div>
   )
 }
