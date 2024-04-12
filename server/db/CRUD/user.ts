@@ -9,13 +9,13 @@ export async function addUsers(data) {
 
 //Get user By Id
 
-export async function getUserById(id: number) {
-  const user = await db('users').where({ id }).select().first()
+export async function getUserById(id: string) {
+  const user = await db('users').where('auth0_id', id).select().first()
   return user
 }
 
 //Update user by Id
 
-export async function updateUserById(data, id) {
-  await db('user').where({ id }).update(data)
+export async function updateUserById(id: string, data) {
+  await db('users').where('auth0_id', id).update(data)
 }
