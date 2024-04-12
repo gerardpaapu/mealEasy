@@ -4,14 +4,12 @@ import Header from './Header'
 
 export default function Layout() {
   return (
-    <html lang="en">
-      <body className={' layout-body flex min-h-screen w-screen flex-col'}>
-        <div className="flex-1">
-          <Header />
-          <Outlet />
-        </div>
-        <Footer />
-      </body>
-    </html>
+    <div className={' layout-body flex min-h-screen w-screen flex-col'}>
+      <div className="flex-1">
+        <Header />
+        <Outlet />
+      </div>
+      <Footer />
+    </div>
   )
 }
