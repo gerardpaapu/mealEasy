@@ -8,3 +8,7 @@ export async function getUserById(id: string) {
   console.log(user)
   return user.body as User
 }
+
+export async function addUser(data: User) {
+  await request.post(`${rootUrl}/users/`).send(data)
+}
