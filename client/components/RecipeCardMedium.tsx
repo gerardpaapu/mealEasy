@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 export default function RecipeCardMedium() {
-  const [selectedMeal, setSelectedMeal] = useState(null)
   const [selectedItems, setSelectedItems] = useState([])
 
   const meals = [
@@ -53,14 +52,10 @@ export default function RecipeCardMedium() {
   ]
 
   const handleSelectMeal = (index) => {
-    if (selectedItems.length < 7 || selectedItems.includes(index)) {
-      //if selected items less than 7 or includes index
-      setSelectedMeal(index)
-      if (selectedItems.includes(index)) {
-        setSelectedItems(selectedItems.filter((item) => item !== index)) // remove the index if it's already selected
-      } else {
-        setSelectedItems([...selectedItems, index]) // add the index if it's not selected
-      }
+    if (selectedItems.includes(index)) {
+      setSelectedItems(selectedItems.filter((item) => item !== index))
+    } else if (selectedItems.length < 7) {
+      setSelectedItems([...selectedItems, index])
     }
   }
 
@@ -70,10 +65,10 @@ export default function RecipeCardMedium() {
         <button
           key={index}
           onClick={() => handleSelectMeal(index)}
-          className={`card card-compact relative m-4 w-96 bg-base-100 shadow-xl ${selectedMeal === index ? 'border-4 border-green-500' : ''}`}
+          className={`card card-compact relative m-4 w-96 bg-base-100 shadow-xl ${selectedItems.includes(index) ? 'border-4 border-green-500' : ''}`}
         >
           {selectedItems.includes(index) && (
-            <div className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full">
+            <div className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border-green-500">
               <div className="form-control">
                 <label className="label cursor-pointer">
                   <input

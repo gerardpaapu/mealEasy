@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function WeekPlan() {
   const daysOfWeek = [
@@ -37,12 +38,12 @@ export default function WeekPlan() {
       <h1 className="mb-20 flex justify-center text-4xl">Your week</h1>
       <div className="flex">
         <div>
-          <div className="flex flex-col items-start">
+          <div className="ml-12 flex flex-col items-start">
             {daysOfWeek.map((day, index) => (
-              <div key={index} className="mb-10 flex h-36">
-                <div className="w-44">
-                  <h2 className="text-xl font-semibold">{day}</h2>
-                </div>
+              <div key={index} className="mb-10 h-36">
+                {/* <div className="w-44"> */}
+                <h2 className="text-xl font-semibold">{day}</h2>
+                {/* </div> */}
                 <div className="card card-side h-28 w-80 bg-base-100 shadow-xl">
                   <figure>
                     <img
@@ -61,6 +62,7 @@ export default function WeekPlan() {
               </div>
             ))}
           </div>
+          <Link to="recipes">Back to Recipes</Link>
         </div>
         <div className="ml-40">{selectedRecipe}</div>
       </div>
