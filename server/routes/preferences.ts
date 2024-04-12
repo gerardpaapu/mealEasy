@@ -27,16 +27,19 @@ router.post('/', async (req, res) => {
   try {
     const data = req.body
     await db.addUserPreferences(data)
+    res.status(200).send('preference added')
   } catch (e) {
     res.status(500).send(`Error: API call not working, ${e}`)
   }
 })
 
-router.patch('/user/:userId', async (req, res) => {
+router.delete('/delete', async (req, res) => {
   try {
-    const userId = req.params.userId
-    const data = req.body
-    await db.updateUserPreferences(userId, data)
+    const userId = req.body.userId
+    const preferenceId = req.body.preferenceId
+
+    await db.delPreferences(userId, preferenceId)
+    res.status(200).send('preference deleted')
   } catch (e) {
     res.status(500).send(`Error: API call not working, ${e}`)
   }

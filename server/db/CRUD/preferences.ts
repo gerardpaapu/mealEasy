@@ -1,15 +1,22 @@
 import connection from '../connection'
+import { Preferences } from '../../../models/preferences'
+import {
+  AllUserPreferences,
+  UserPreferences,
+} from '../../../models/userPreferences'
 
 const db = connection
 
 //Get Preferences
 
-export async function getPreferences() {
+export async function getPreferences(): Promise<Preferences[]> {
   const preferences = await db('preferences').select()
   return preferences
 }
 
-export async function getUserPreferences(userId: string) {
+export async function getUserPreferences(
+  userId: string,
+): Promise<AllUserPreferences[]> {
   const UserPreferences = await db('preferences')
     .join(
       'user_preferences',
@@ -22,9 +29,12 @@ export async function getUserPreferences(userId: string) {
   return UserPreferences
 }
 
-export async function addUserPreferences(data) {
+export async function addUserPreferences(data: UserPreferences) {
   await db('user_preferences').insert(data)
 }
-export async function updateUserPreferences(userId: string, data) {
-  await db('user_preferences').where('user_id', userId).update(data)
+export async function delPreferences(userId: string, preferenceId: number) {
+  await db('user_preferences')
+    .where('user_id', userId)
+    .where('preference_id', preferenceId)
+    .delete()
 }
