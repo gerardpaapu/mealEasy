@@ -6,17 +6,15 @@ import {
 } from '../components/Authenticated'
 import { useState } from 'react'
 import { User } from '../../models/users'
-
-// const fakeData = {
-//   auth0_id: 'auth0|648fd1c873375442becf2c60',
-//   email: 'katie@example.com',
-//   first_name: 'Katie',
-//   last_name: 'Davies',
-//   nickname: 'Katie',
-// }
+import { getUserById } from '../apis/users'
 
 function EditProfile() {
   const { user } = useAuth0()
+
+  const auth = user?.sub
+
+  const dbUser = getUserById(auth)
+  console.log(dbUser)
 
   const [profile, setProfile] = useState({
     nickname: user?.nickname,
@@ -26,8 +24,6 @@ function EditProfile() {
   } as User)
 
   console.log(user)
-
-  // const auth = user?.sub
 
   // function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
   //   e.preventDefault()
