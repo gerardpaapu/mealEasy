@@ -22,3 +22,22 @@ router.get('/', async (req, res) => {
     res.status(500).send(`Error: API call not working, ${e}`)
   }
 })
+
+router.post('/', async (req, res) => {
+  try {
+    const data = req.body
+    await db.addUserPreferences(data)
+  } catch (e) {
+    res.status(500).send(`Error: API call not working, ${e}`)
+  }
+})
+
+router.patch('/user/:userId', async (req, res) => {
+  try {
+    const userId = req.params.userId
+    const data = req.body
+    await db.updateUserPreferences(userId, data)
+  } catch (e) {
+    res.status(500).send(`Error: API call not working, ${e}`)
+  }
+})

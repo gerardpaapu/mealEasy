@@ -21,3 +21,10 @@ export async function getUserPreferences(userId: string) {
     .select('id', 'name', 'type', 'user_id', 'preference_id')
   return UserPreferences
 }
+
+export async function addUserPreferences(data) {
+  await db('user_preferences').insert(data)
+}
+export async function updateUserPreferences(userId: string, data) {
+  await db('user_preferences').where('user_id', userId).update(data)
+}
