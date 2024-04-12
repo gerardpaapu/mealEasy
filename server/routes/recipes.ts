@@ -14,7 +14,7 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.get('/:name', async (req, res) => {
+router.get('/name/:name', async (req, res) => {
   try {
     const name = req.params.name
 
