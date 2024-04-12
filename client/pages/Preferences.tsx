@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import { addUser } from '../apis/users'
+import { addUser } from '../apis/backend-apis/users'
 import { User } from '../../models/users'
 
 function Preferences() {
