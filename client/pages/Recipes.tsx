@@ -11,7 +11,7 @@ function Recipe() {
         <h3>Choose up to seven meals</h3>
       </div>
       <RecipeCardSml />
-      <Link to="weekplan">Save and Go to meal plan</Link>
+      <Link to="/home">Save and Go to meal plan</Link>
     </div>
   )
 }
