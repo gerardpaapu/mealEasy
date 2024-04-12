@@ -7,7 +7,7 @@ export default router
 router.get('/:id', async (req, res) => {
   try {
     const id = Number(req.params.id)
-    const recipe = await db.getRecipesById(id)
+    const recipe = await db.getRecipeById(id)
     res.json(recipe)
   } catch (e) {
     res.status(500).send(`Error: API call not working, ${e}`)
