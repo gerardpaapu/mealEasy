@@ -26,6 +26,11 @@ function Preferences() {
     }
     addUser(data)
   }
+
+  function handleClick(e) {
+    console.log(e.target)
+  }
+
   if (preferences) {
     const getTypes = () => {
       const arr = Array.from(new Set(preferences.map((item) => item.type)))
@@ -47,7 +52,10 @@ function Preferences() {
                   {preferences.map((pref) =>
                     pref.type === item ? (
                       <li key={pref.name} className="mb-2">
-                        <button className="w-full rounded-lg border-none bg-yellow-500 px-4 py-1 font-bold">
+                        <button
+                          onClick={handleClick}
+                          className="w-full rounded-lg border-none bg-yellow-500 px-4 py-1 font-bold"
+                        >
                           {pref.name.charAt(0).toUpperCase() +
                             pref.name.slice(1)}
                         </button>
