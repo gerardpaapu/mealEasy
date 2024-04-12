@@ -12,3 +12,8 @@ export async function getUserById(id: User) {
 export async function addUser(data: User) {
   await request.post(`${rootUrl}/users/`).send(data)
 }
+
+export async function updateUser(data: User) {
+  const id = data.auth0_id
+  return await request.patch(`${rootUrl}/users/${id}`).send(data)
+}
