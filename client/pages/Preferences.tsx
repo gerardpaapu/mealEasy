@@ -1,11 +1,20 @@
-
 import { useAuth0 } from '@auth0/auth0-react'
 import { addUser } from '../apis/backend-apis/users'
 import { User } from '../../models/users'
-
+import useGetPreferences from '../hooks/useGetPreferences'
 
 function Preferences() {
   const { user, isAuthenticated } = useAuth0()
+  const { data: preferences, isLoading, isError } = useGetPreferences()
+  console.log(preferences)
+
+  if (isLoading) {
+    return <p>Retreiving your data</p>
+  }
+
+  if (isError) {
+    return <p>There was an error retrieving your profile</p>
+  }
 
   if (isAuthenticated) {
     const data: User = {
@@ -17,8 +26,37 @@ function Preferences() {
     }
     addUser(data)
   }
+  if (preferences) {
+    const getTypes = () => {
+      const arr = Array.from(new Set(preferences.map((item) => item.type)))
+      return arr
+    }
+    const typesArr = getTypes()
 
-  return <h1>Preferences</h1>
+    return (
+      <div className="mt-5">
+        <h2 className="ml-2 text-2xl">Preferences</h2>
+        <ul className="ml-10">
+          {typesArr.map((item) => (
+            <li key={item}>
+              <h3 className="mb-3 mt-5 text-xl">
+                {item.charAt(0).toUpperCase() + item.slice(1)}
+              </h3>
+              <ul className="ml-5">
+                {preferences.map((pref) =>
+                  pref.type === item ? (
+                    <li key={pref.name} className="mb-2">
+                      <button>{pref.name.charAt(0).toUpperCase() + pref.name.slice(1)}</button>
+                    </li>
+                  ) : null,
+                )}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
 }
 
 export default Preferences

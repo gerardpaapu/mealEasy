@@ -24,11 +24,11 @@ const preferences = [
   },
 ]
 
-const typesArray = () => {
+const getTypes = () => {
   const arr = Array.from(new Set(preferences.map((item) => item.type)))
   return arr
 }
-const types = typesArray()
+const typesArr = getTypes()
 
 function Profile() {
   const { user } = useAuth0()
@@ -56,7 +56,7 @@ function Profile() {
         <div className="mt-5">
           <h2 className="ml-2 text-2xl">Preferences</h2>
           <ul className="ml-10">
-            {types.map((item) => (
+            {typesArr.map((item) => (
               <li key={item}>
                 <h3 className="mb-3 mt-5 text-xl">
                   {item.charAt(0).toUpperCase() + item.slice(1)}
