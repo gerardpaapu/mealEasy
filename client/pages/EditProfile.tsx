@@ -4,16 +4,17 @@ import {
   IfAuthenticated,
   IfNotAuthenticated,
 } from '../components/Authenticated'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { User } from '../../models/users'
 
 import useGetUserById from '../hooks/useGetUserById'
+import useUpdateUser from '../hooks/useUpdateUser'
 
 function EditProfile() {
   const { user } = useAuth0()
 
   const auth = user?.sub
-
+  const updateUser = useUpdateUser()
   const { data, isLoading, isError } = useGetUserById(auth)
 
   const [profile, setProfile] = useState({
@@ -23,6 +24,17 @@ function EditProfile() {
     email: '',
   } as User)
 
+  useEffect(() => {
+    if (data) {
+      setProfile({
+        nickname: data.nickname,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        email: data.email,
+      } as User)
+    }
+  }, [data])
+
   if (isLoading) {
     return <p>Retreiving your data</p>
   }
@@ -31,11 +43,11 @@ function EditProfile() {
     return <p>There was an error retrieving your profile</p>
   }
 
-  // function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  //   e.preventDefault()
-  //   const postData = { ...profile, auth0_id: auth }
-  //   //put in a mutate here to update the data
-  // }
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const postData = { ...profile, auth0_id: auth }
+    updateUser.mutate(postData)
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const name = e.target.name
@@ -50,7 +62,7 @@ function EditProfile() {
           {user && (
             <div>
               <h1>Edit Your Profile</h1>
-              <form>
+              <form onSubmit={handleSubmit}>
                 <label htmlFor="nickname">
                   Nickname:
                   <input
