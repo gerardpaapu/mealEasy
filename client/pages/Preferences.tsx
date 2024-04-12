@@ -42,15 +42,20 @@ function Preferences() {
               <h3 className="mb-3 mt-5 text-xl">
                 {item.charAt(0).toUpperCase() + item.slice(1)}
               </h3>
-              <ul className="ml-5">
-                {preferences.map((pref) =>
-                  pref.type === item ? (
-                    <li key={pref.name} className="mb-2">
-                      <button>{pref.name.charAt(0).toUpperCase() + pref.name.slice(1)}</button>
-                    </li>
-                  ) : null,
-                )}
-              </ul>
+              <div className="container max-w-md">
+                <ul className="ml-5 grid grid-cols-3 gap-4">
+                  {preferences.map((pref) =>
+                    pref.type === item ? (
+                      <li key={pref.name} className="mb-2">
+                        <button className="w-full rounded-lg border-none bg-yellow-500 px-4 py-1 font-bold">
+                          {pref.name.charAt(0).toUpperCase() +
+                            pref.name.slice(1)}
+                        </button>
+                      </li>
+                    ) : null,
+                  )}
+                </ul>
+              </div>
             </li>
           ))}
         </ul>
