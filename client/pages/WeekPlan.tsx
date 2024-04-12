@@ -1,4 +1,5 @@
 import React from 'react'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 
 const meals = [
   {
@@ -55,36 +56,71 @@ export default function WeekPlan() {
     return meals.filter((meal) => meal.day === day)
   }
 
+  const onDragEnd = (result) => {
+    // TODO: Handle drag and drop logic
+  }
+
   return (
     <div className="mb-4 mt-24">
       <div className="flex justify-center text-4xl">
         <h2>Your Week</h2>
       </div>
-      <div className="ml-10 flex flex-col gap-4">
-        {daysOfWeek.map((day, index) => (
-          <div key={index} className="flex items-center">
-            <div className="mr-2 font-bold">{day}</div>
-            <div
-              className="card card-side bg-base-100 shadow-xl"
-              style={{ maxWidth: '200px' }}
-            >
-              <figure>
-                <img
-                  src={getCurrentDayMeals(day)?.image}
-                  alt={getCurrentDayMeals(day)?.name}
-                  style={{ maxWidth: '100%' }}
-                />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">{getCurrentDayMeals(day)?.name}</h2>
-                <p>Some description about the meal</p>
-                <div className="card-actions justify-end">
-                  <button className="btn btn-primary">Recipe Details</button>
-                </div>
-              </div>
-            </div>
+      <div className="ml-10">
+        <DragDropContext onDragEnd={onDragEnd}>
+          <div className="flex">
+            {daysOfWeek.map((day, index) => (
+              <Droppable droppableId={day} key={index}>
+                {(provided) => (
+                  <div
+                    className="flex flex-col items-center"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    <div className="font-bold">{day}</div>
+                    {getCurrentDayMeals(day).map((meal, mealIndex) => (
+                      <Draggable
+                        key={mealIndex}
+                        draggableId={meal.name}
+                        index={mealIndex}
+                      >
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <div
+                              className="card card-side bg-base-100 shadow-xl"
+                              style={{ maxWidth: '200px', margin: '8px' }}
+                            >
+                              <figure>
+                                <img
+                                  src={meal.image}
+                                  alt={meal.name}
+                                  style={{ maxWidth: '100%' }}
+                                />
+                              </figure>
+                              <div className="card-body">
+                                <h2 className="card-title">{meal.name}</h2>
+                                <p>Some description about the meal</p>
+                                <div className="card-actions justify-end">
+                                  <button className="btn btn-primary">
+                                    Recipe Details
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            ))}
           </div>
-        ))}
+        </DragDropContext>
       </div>
     </div>
   )
