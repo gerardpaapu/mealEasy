@@ -1,9 +1,10 @@
+import { UpdateUser, User } from '../../../models/users'
 import connection from '../connection'
 
 const db = connection
 
 //add User by post request
-export async function addUsers(data) {
+export async function addUsers(data: User) {
   await db('users').insert(data)
 }
 
@@ -16,6 +17,6 @@ export async function getUserById(id: string) {
 
 //Update user by Id
 
-export async function updateUserById(id: string, data) {
+export async function updateUserById(id: string, data:UpdateUser) {
   await db('users').where('auth0_id', id).update(data)
 }
