@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import RecipeCardSml from '../components/RecipeCardSml'
+import RecipeCardMedium from '../components/RecipeCardMedium'
 
 function Recipe() {
   return (
@@ -10,7 +10,7 @@ function Recipe() {
       <div className="mt-2 flex justify-center">
         <h3>Choose up to seven meals</h3>
       </div>
-      <RecipeCardSml />
+      <RecipeCardMedium />
       <Link to="/home">Save and Go to meal plan</Link>
     </div>
   )

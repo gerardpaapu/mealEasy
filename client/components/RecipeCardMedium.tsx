@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function RecipeCardSml() {
+export default function RecipeCardMedium() {
   const [selectedMeal, setSelectedMeal] = useState(null)
   const [selectedItems, setSelectedItems] = useState([])
 
