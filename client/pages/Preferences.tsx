@@ -6,7 +6,7 @@ import useGetPreferences from '../hooks/useGetPreferences'
 function Preferences() {
   const { user, isAuthenticated } = useAuth0()
   const { data: preferences, isLoading, isError } = useGetPreferences()
-  console.log(preferences)
+ 
 
   if (isLoading) {
     return <p>Retreiving your data</p>
