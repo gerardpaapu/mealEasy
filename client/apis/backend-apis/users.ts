@@ -5,7 +5,7 @@ const rootUrl = '/api/v1'
 
 export async function getUserById(id: string) {
   const user = await request.get(`${rootUrl}/users/${id}`)
-  console.log('getbyid', user)
+  console.log('getbyuserid', user)
   return user.body as User
 }
 
