@@ -8,7 +8,7 @@ import Preferences from './pages/Preferences'
 import App from './components/App'
 import WeekPlan from './pages/WeekPlan'
 
-export const routes = createRoutesFromElements(
+const routes = createRoutesFromElements(
   <>
     <Route path="/" element={<Landing />} />
     <Route path="home" element={<App />}>
@@ -20,3 +20,5 @@ export const routes = createRoutesFromElements(
     </Route>
   </>,
 )
+
+export default routes
