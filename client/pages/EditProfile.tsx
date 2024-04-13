@@ -61,16 +61,17 @@ function EditProfile() {
       <>
         <IfAuthenticated>
           {user && (
-            <div>
-              <h1>Edit Your Profile</h1>
-              <form onSubmit={handleSubmit}>
-                <label htmlFor="nickname">
+            <div className="flex flex-col flex-wrap content-center">
+              <h1 className=" mb-5 text-2xl">Edit Your Profile</h1>
+              <form onSubmit={handleSubmit} className="flex flex-col">
+                <label htmlFor="nickname" className="mr-3">
                   Nickname:
                   <input
                     type="text"
                     name="nickname"
                     placeholder={data.nickname}
                     onChange={handleChange}
+                    className="focus:shadow-outline mb-5 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </label>
 
@@ -81,6 +82,7 @@ function EditProfile() {
                     name="first_name"
                     placeholder={data.first_name}
                     onChange={handleChange}
+                    className="focus:shadow-outline mb-5 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </label>
                 <label htmlFor="last_name">
@@ -90,6 +92,7 @@ function EditProfile() {
                     name="last_name"
                     placeholder={data.last_name}
                     onChange={handleChange}
+                    className="focus:shadow-outline mb-5 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </label>
                 <label htmlFor="email">
@@ -99,6 +102,7 @@ function EditProfile() {
                     name="email"
                     placeholder={data.email}
                     onChange={handleChange}
+                    className="focus:shadow-outline mb-5 w-full appearance-none rounded border px-3 py-2 leading-tight text-gray-700 shadow focus:outline-none"
                   />
                 </label>
                 <Button>Save</Button>
