@@ -15,6 +15,7 @@ export interface WeeksId extends Weeks {
 }
 
 export interface UpdateWeek {
+  id: number
   monday?: number
   tuesday?: number
   wednesday?: number
