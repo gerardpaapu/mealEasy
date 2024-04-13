@@ -63,7 +63,7 @@ export default function RecipeCardMedium() {
   const isSelectionFull = selectedItems.length >= 7
 
   return (
-    <div className="flex justify-center">
+    <div className="relative flex flex-col items-center justify-center">
       <div className="flex flex-wrap justify-start">
         {meals.map((meal, index) => (
           <button
@@ -87,7 +87,11 @@ export default function RecipeCardMedium() {
               </div>
             )}
             <figure>
-              <img className="h-40 w-64" src={meal.image} alt={meal.name} />
+              <img
+                className="ml-3 mt-3 h-40 w-64 rounded"
+                src={meal.image}
+                alt={meal.name}
+              />
             </figure>
             <div className="card-body">
               <h2 className="card-title">{meal.name}</h2>
@@ -97,9 +101,9 @@ export default function RecipeCardMedium() {
         ))}
       </div>
       {isSelectionFull && (
-        <p className="mt-4 text-center text-red-500">
+        <div className="fixed left-0 top-0 w-full bg-red-500 py-2 text-center text-white">
           You have selected seven meals. You cannot select more.
-        </p>
+        </div>
       )}
     </div>
   )
