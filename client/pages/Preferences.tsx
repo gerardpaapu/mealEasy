@@ -5,7 +5,7 @@ import { User } from '../../models/users'
 function Preferences() {
   const { user, isAuthenticated } = useAuth0()
 
-  if (isAuthenticated) {
+  if (isAuthenticated && user) {
     const data: User = {
       auth0_id: user?.sub,
       email: user?.email,
