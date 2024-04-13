@@ -2,14 +2,6 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { Link } from 'react-router-dom'
 import useGetUserById from '../hooks/useGetUserById'
 
-// const fakeData = {
-//   auth0_id: 'auth0|648fd1c873375442becf2c60',
-//   email: 'katie@example.com',
-//   first_name: 'Katie',
-//   last_name: 'Davies',
-//   nickname: 'Katie',
-// }
-
 const preferences = [
   {
     name: 'balanced',
