@@ -18,11 +18,6 @@ export async function seed(knex) {
     },
 
     {
-      name: 'high-protein',
-      type: 'diet',
-    },
-
-    {
       name: 'vegan',
       type: 'health',
     },
