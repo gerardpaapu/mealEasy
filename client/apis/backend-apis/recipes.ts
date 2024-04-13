@@ -11,7 +11,7 @@ export async function getRecipeById(id: RecipeId) {
 }
 
 export async function getRecipeByName(name: Recipes) {
-  const recipe = await request.get(`${rootUrl}/recipes/${name}`)
+  const recipe = await request.get(`${rootUrl}/recipes/name/${name}`)
   console.log('getbyname', recipe)
   return recipe.body as RecipeId
 }
