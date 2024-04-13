@@ -12,6 +12,7 @@ export async function addRecipes(data: Recipes) {
 
 export async function getRecipesByName(name: string): Promise<RecipeId[]> {
   const recipe = await db('recipes').where({ name }).select()
+
   return recipe
 }
 

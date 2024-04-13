@@ -19,6 +19,7 @@ router.get('/name/:name', async (req, res) => {
     const name = req.params.name
 
     const recipe = await db.getRecipesByName(name)
+
     res.json(recipe)
   } catch (e) {
     res.status(500).send(`Error: API call not working, ${e}`)
