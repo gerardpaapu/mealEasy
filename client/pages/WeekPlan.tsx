@@ -1,6 +1,7 @@
 import React, { useState, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import RecipeDetail from '../components/RecipeDetailCard'
+import Button from '../components/Button'
 
 export default function WeekPlan() {
   const daysOfWeek = [
@@ -50,7 +51,9 @@ export default function WeekPlan() {
               </div>
             ))}
           </div>
-          <Link to="recipes">Back to Recipes</Link>
+          <Link to="recipes">
+            <Button>Back to Recipes</Button>
+          </Link>
         </div>
         <div className="ml-40">{selectedRecipe}</div>
       </div>

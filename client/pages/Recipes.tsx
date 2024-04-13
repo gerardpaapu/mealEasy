@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import RecipeCardMedium from '../components/RecipeCardMedium'
+import Button from '../components/Button'
 
 function Recipe() {
   return (
@@ -12,7 +13,9 @@ function Recipe() {
           <h3>Choose up to seven meals</h3>
         </div>
         <RecipeCardMedium />
-        <Link to="/home">Save and Go to meal plan</Link>
+        <Link to="/home">
+          <Button>Save and See your plan</Button>
+        </Link>
       </div>
     </div>
   )
