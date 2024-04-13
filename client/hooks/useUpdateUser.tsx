@@ -1,18 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { updateUser } from '../apis/backend-apis/users'
 
-interface Params {
-  auth0_id?: string
-  email?: string
-  first_name?: string
-  last_name?: string
-  nickname?: string
-}
+import { User } from '../../models/users'
+
 
 export default function useUpdateUser() {
   const client = useQueryClient()
   return useMutation({
-    mutationFn: (values: Params) => updateUser(values),
+    mutationFn: (values: User) => updateUser(values),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['user'] })
     },
