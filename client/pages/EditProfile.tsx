@@ -9,6 +9,7 @@ import { User } from '../../models/users'
 
 import useGetUserById from '../hooks/useGetUserById'
 import useUpdateUser from '../hooks/useUpdateUser'
+import Button from '../components/Button'
 
 function EditProfile() {
   const { user } = useAuth0()
@@ -100,7 +101,7 @@ function EditProfile() {
                     onChange={handleChange}
                   />
                 </label>
-                <button>Save</button>
+                <Button>Save</Button>
               </form>
             </div>
           )}
