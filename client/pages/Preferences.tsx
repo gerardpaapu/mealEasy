@@ -6,7 +6,6 @@ import useGetPreferences from '../hooks/useGetPreferences'
 function Preferences() {
   const { user, isAuthenticated } = useAuth0()
   const { data: preferences, isLoading, isError } = useGetPreferences()
- 
 
   if (isLoading) {
     return <p>Retreiving your data</p>
@@ -24,6 +23,7 @@ function Preferences() {
       last_name: user?.family_name,
       nickname: user?.nickname,
     }
+    console.log(data)
     addUser(data)
   }
 
