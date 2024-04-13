@@ -63,13 +63,13 @@ export default function RecipeCardMedium() {
   const isSelectionFull = selectedItems.length >= 7
 
   return (
-    <div>
-      <div className="flex flex-wrap justify-center">
+    <div className="flex justify-center">
+      <div className="flex flex-wrap justify-start">
         {meals.map((meal, index) => (
           <button
             key={index}
             onClick={() => handleSelectMeal(index)}
-            className={`card card-compact relative m-4 w-96 bg-base-100 shadow-xl ${
+            className={`card card-compact relative m-4 w-96 bg-base-100 bg-white shadow-xl ${
               isMealSelected(index) ? 'border-4 border-green-500' : ''
             } ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
           >
