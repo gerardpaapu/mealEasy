@@ -2,7 +2,12 @@
 export default {
   content: ['./index.html', './client/**/*.tsx'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customGreen: '#7bb44d',
+        headingGreen: '#429400',
+      },
+    },
   },
   plugins: [require('daisyui')],
   daisyui: {

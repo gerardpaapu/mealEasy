@@ -16,7 +16,7 @@ function Preferences() {
     return <p>There was an error retrieving your profile</p>
   }
 
-  if (isAuthenticated) {
+  if (isAuthenticated && user) {
     const data: User = {
       auth0_id: user?.sub,
       email: user?.email,

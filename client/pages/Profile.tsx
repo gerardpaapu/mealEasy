@@ -1,13 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { Link } from 'react-router-dom'
-
-// const fakeData = {
-//   auth0_id: 'auth0|648fd1c873375442becf2c60',
-//   email: 'katie@example.com',
-//   first_name: 'Katie',
-//   last_name: 'Davies',
-//   nickname: 'Katie',
-// }
+import useGetUserById from '../hooks/useGetUserById'
 
 const preferences = [
   {
@@ -32,21 +25,37 @@ const typesArr = getTypes()
 
 function Profile() {
   const { user } = useAuth0()
-  if (user)
+
+  const auth = user?.sub
+
+  const { data, isLoading, isError } = useGetUserById(auth)
+
+  if (isLoading) {
+    return <p>is Loading ...</p>
+  }
+
+  if (isError) {
+    return <p>An Error has occurred. </p>
+  }
+
+  if (data)
     return (
       <div>
-        <h1 className="text-center text-3xl">Welcome {user.name} </h1>
+        <h1 className="text-center text-3xl">Welcome {data.nickname} </h1>
         <div className="mt-5">
           <h2 className="mb-5 ml-2 text-2xl">My Personal Details</h2>
           <div className="ml-10">
             <p className="mb-2">
-              <strong>First name:</strong> {user.given_name}
+              <strong>Nickname:</strong> {data.nickname}
             </p>
             <p className="mb-2">
-              <strong>Last name:</strong> {user.family_name}
+              <strong>First name:</strong> {data.first_name}
             </p>
             <p className="mb-2">
-              <strong>Email:</strong> {user.email}
+              <strong>Last name:</strong> {data.last_name}
+            </p>
+            <p className="mb-2">
+              <strong>Email:</strong> {data.email}
             </p>
           </div>
           <button className=" ml-10 mt-5 border-4">
