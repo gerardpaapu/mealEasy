@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { updateUser } from '../apis/users'
+import { updateUser } from '../apis/backend-apis/users'
 
 interface Params {
   auth0_id?: string
