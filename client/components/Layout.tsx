@@ -4,10 +4,12 @@ import Header from './Header'
 
 export default function Layout() {
   return (
-    <div className={' layout-body flex min-h-screen w-screen flex-col'}>
-      <div className="flex-1">
-        <Header />
-        <Outlet />
+    <div className="layout-body flex min-h-screen flex-col">
+      <Header />
+      <div className="flex flex-grow justify-center">
+        <div className="w-full max-w-screen-2xl px-4">
+          <Outlet />
+        </div>
       </div>
       <Footer />
     </div>
