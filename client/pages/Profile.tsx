@@ -43,7 +43,9 @@ function Profile() {
   if (data)
     return (
       <div>
-        <h1 className="text-center text-3xl">Welcome {data.nickname} </h1>
+        <h1 className="text-headingGreen mb-14 flex justify-center text-4xl">
+          Welcome {data.nickname}
+        </h1>
         <div className="mt-5">
           <h2 className="mb-5 ml-2 text-2xl">My Personal Details</h2>
           <div className="ml-10">
@@ -64,6 +66,7 @@ function Profile() {
             {' '}
             <Link to="edit">Edit Profile</Link>
           </Button>
+          <LogoutButton>Log Out</LogoutButton>
         </div>
         <div className="mt-5">
           <h2 className="ml-2 text-2xl">Preferences</h2>
@@ -89,7 +92,6 @@ function Profile() {
         <Button>
           <Link to="/home/preferences">Edit Preferences</Link>
         </Button>
-        <LogoutButton>Log Out</LogoutButton>
       </div>
     )
 }
