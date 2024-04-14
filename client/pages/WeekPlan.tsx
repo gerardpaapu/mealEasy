@@ -2,6 +2,7 @@ import React, { useState, ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import RecipeDetail from '../components/RecipeDetailCard'
 import Button from '../components/Button'
+import useGetWeekById from '../hooks/useGetWeeks'
 
 export default function WeekPlan() {
   const daysOfWeek = [
@@ -13,6 +14,9 @@ export default function WeekPlan() {
     'Saturday',
     'Sunday',
   ]
+
+  const { data } = useGetWeekById(1)
+  console.log(data?.monday)
 
   const [selectedRecipe, setSelectedRecipe] = useState<ReactNode | null>(null)
 
@@ -29,7 +33,7 @@ export default function WeekPlan() {
 
   return (
     <div>
-      <h1 className="text-headingGreen mb-14 flex justify-center text-4xl">
+      <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
         Your week
       </h1>
       <div className="mb-20 flex">
@@ -37,7 +41,7 @@ export default function WeekPlan() {
           <div className="ml-12 flex flex-col items-start">
             {daysOfWeek.map((day, index) => (
               <div key={index} className="h-32">
-                <h2 className="text-headingGreen mb-1 text-xl font-semibold">
+                <h2 className="mb-1 text-xl font-semibold text-headingGreen">
                   {day}
                 </h2>
                 <div className="card card-side h-20 w-80 bg-white shadow-xl">
