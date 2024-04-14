@@ -4,9 +4,9 @@ export default function Header() {
   return (
     <div className="mb-10 ml-5 mr-5 mt-5 flex h-16 items-center justify-between px-4">
       <Link to="/home">
-        <img src="/images/greenLogo.png" alt="MealEasy logo" className="h-10" />
+        <img src="/images/greenLogo.png" alt="logo" className="h-10" />
       </Link>
-      <Link to="profile">
+      <Link to="/profile">
         <img src="/images/userIcon.png" alt="User" className="h-10" />
       </Link>
     </div>

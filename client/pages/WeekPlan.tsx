@@ -94,6 +94,8 @@ export default function WeekPlan() {
   const handleDragOver = (e) => {
     e.preventDefault()
   }
+
+  //Adding user to the database -------
   const { user } = useAuth0()
   const auth = user?.sub
   const { data, isLoading, isError } = useGetUserById(auth)
@@ -116,6 +118,7 @@ export default function WeekPlan() {
   } else {
     console.log('user already exsits')
   }
+  ///---------
 
   return (
     <div>
