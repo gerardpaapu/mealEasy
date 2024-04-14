@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
+import RecipeDetail from './RecipeDetailCard'
 
 export default function RecipeCardMedium() {
   const [selectedItems, setSelectedItems] = useState([])
+  const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(null) // state to track selected recipe index
 
   const meals = [
     {
@@ -51,58 +53,84 @@ export default function RecipeCardMedium() {
     },
   ]
 
-  const handleSelectMeal = (index) => {
-    if (selectedItems.includes(index)) {
-      setSelectedItems(selectedItems.filter((item) => item !== index))
-    } else if (selectedItems.length < 7) {
+  const handleShowRecipeDetail = (index) => {
+    setSelectedRecipeIndex(index)
+  }
+
+  const handleToggleSelection = (index) => {
+    const selectedIndex = selectedItems.indexOf(index)
+    if (selectedIndex === -1) {
       setSelectedItems([...selectedItems, index])
+    } else {
+      const updatedSelection = [...selectedItems]
+      updatedSelection.splice(selectedIndex, 1)
+      setSelectedItems(updatedSelection)
     }
   }
 
   const isMealSelected = (index) => selectedItems.includes(index)
   const isSelectionFull = selectedItems.length >= 7
 
+  const handleDetailClick = () => {
+    setSelectedRecipeIndex(null) // closing detail view when detail is clicked
+  }
+
   return (
     <div className="relative flex flex-col items-center justify-center">
       <div className="flex flex-wrap justify-start">
         {meals.map((meal, index) => (
-          <button
-            key={index}
-            onClick={() => handleSelectMeal(index)}
-            className={`card card-compact relative m-4 w-96 bg-base-100 bg-white shadow-xl ${
-              isMealSelected(index) ? 'border-4 border-green-500' : ''
-            } ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
-          >
-            {isMealSelected(index) && (
-              <div className="absolute right-2 top-2 flex h-6 w-6 items-center justify-center rounded-full border-green-500">
+          <div key={index} className="m-4 w-96">
+            <div
+              className={`card card-compact relative bg-base-100 bg-white shadow-xl ${
+                isMealSelected(index) ? 'border-4 border-green-500' : ''
+              } ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
+            >
+              <figure onClick={() => handleShowRecipeDetail(index)}>
+                <img
+                  className="ml-3 mt-3 h-40 w-64 rounded"
+                  src={meal.image}
+                  alt={meal.name}
+                />
+              </figure>
+              <div
+                className="card-body"
+                onClick={() => handleShowRecipeDetail(index)}
+              >
+                <h2 className="card-title">{meal.name}</h2>
+                <p>Some description about the meal goes here.</p>
+              </div>
+              <div className="absolute right-2 top-2">
                 <div className="form-control">
                   <label className="label cursor-pointer">
                     <input
                       type="checkbox"
-                      defaultChecked
+                      checked={isMealSelected(index)}
+                      onChange={() => handleToggleSelection(index)}
                       className="checkbox-primary checkbox"
                     />
                   </label>
                 </div>
               </div>
-            )}
-            <figure>
-              <img
-                className="ml-3 mt-3 h-40 w-64 rounded"
-                src={meal.image}
-                alt={meal.name}
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{meal.name}</h2>
-              <p>Some description about the meal goes here.</p>
             </div>
-          </button>
+          </div>
         ))}
       </div>
       {isSelectionFull && (
         <div className="fixed left-0 top-0 w-full bg-red-500 py-2 text-center text-white">
           You have selected seven meals. You cannot select more.
+        </div>
+      )}
+      {selectedRecipeIndex !== null && ( // render RecipeDetail component if a recipe is selected
+        <div
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          onClick={handleDetailClick}
+        >
+          <div className="z-10">
+            <RecipeDetail
+              imageUrl={meals[selectedRecipeIndex].image}
+              recipeName={meals[selectedRecipeIndex].name}
+            />
+          </div>
         </div>
       )}
     </div>
