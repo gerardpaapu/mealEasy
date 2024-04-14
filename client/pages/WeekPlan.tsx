@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import RecipeDetail from '../components/RecipeDetailCard'
 import Button from '../components/Button'
+import useGetWeekById from '../hooks/useGetWeeks'
 
 export default function WeekPlan() {
   const initialDaysOfWeek = [
@@ -93,7 +94,7 @@ export default function WeekPlan() {
 
   return (
     <div>
-      <h1 className="text-headingGreen mb-14 flex justify-center text-4xl">
+      <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
         Your week
       </h1>
       <div className="mb-20 flex">
@@ -101,7 +102,7 @@ export default function WeekPlan() {
           <div className="ml-12 flex flex-col items-start">
             {daysOfWeek.map((day, index) => (
               <div key={index} className="h-32">
-                <h2 className="text-headingGreen mb-1 text-xl font-semibold">
+                <h2 className="mb-1 text-xl font-semibold text-headingGreen">
                   {day}
                 </h2>
                 <div
