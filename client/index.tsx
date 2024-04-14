@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
         redirect_uri: window.location.origin,
         audience: 'https://mealeasy/api',
       }}
+      useRefreshTokens
+      cacheLocation="localstorage"
     >
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
