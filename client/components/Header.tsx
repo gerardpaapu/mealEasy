@@ -6,7 +6,7 @@ export default function Header() {
       <Link to="/home">
         <img src="/images/greenLogo.png" alt="MealEasy logo" className="h-10" />
       </Link>
-      <Link to="profile/:id">
+      <Link to="profile">
         <img src="/images/userIcon.png" alt="User" className="h-10" />
       </Link>
     </div>
