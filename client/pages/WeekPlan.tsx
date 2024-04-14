@@ -2,7 +2,10 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import RecipeDetail from '../components/RecipeDetailCard'
 import Button from '../components/Button'
-import useGetWeekById from '../hooks/useGetWeeks'
+import AddUser from '../components/AddUser'
+import useGetUserById from '../hooks/useGetUserById'
+import { useAuth0 } from '@auth0/auth0-react'
+import { addUser } from '../apis/backend-apis/users'
 
 export default function WeekPlan() {
   const initialDaysOfWeek = [
@@ -90,6 +93,28 @@ export default function WeekPlan() {
 
   const handleDragOver = (e) => {
     e.preventDefault()
+  }
+  const { user } = useAuth0()
+  const auth = user?.sub
+  const { data, isLoading, isError } = useGetUserById(auth)
+  console.log('users', data)
+  if (isLoading) {
+    return <p>Waiting on user details...</p>
+  }
+  if (isError) {
+    return console.log('error with user')
+  }
+  if (!data) {
+    const newUser: User = {
+      auth0_id: user?.sub,
+      email: user?.email,
+      first_name: user?.given_name,
+      last_name: user?.family_name,
+      nickname: user?.nickname,
+    }
+    addUser(newUser)
+  } else {
+    console.log('user already exsits')
   }
 
   return (
