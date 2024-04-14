@@ -1,4 +1,6 @@
 export async function seed(knex) {
+ 
+  await knex('preferences').del()
   await knex('preferences').insert([
     {
       name: 'balanced',

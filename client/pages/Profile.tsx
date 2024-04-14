@@ -27,8 +27,9 @@ function Profile() {
   const { user } = useAuth0()
 
   const auth = user?.sub
+  const userId = auth ?? '-1'
 
-  const { data, isLoading, isError } = useGetUserById(auth)
+  const { data, isLoading, isError } = useGetUserById(userId)
 
   if (isLoading) {
     return <p>is Loading ...</p>
