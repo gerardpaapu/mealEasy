@@ -1,3 +1,5 @@
+// @vitest-environment jsdom
+
 import { afterEach } from 'vitest'
 import { cleanup, render } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -9,7 +11,7 @@ import {
 } from 'react-router-dom'
 import '@testing-library/jest-dom/vitest'
 
-import routes from '../client/routes'
+import routes from './routes'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 afterEach(cleanup)
@@ -25,22 +27,33 @@ export function renderWithRouter(location = '/') {
   })
 
   userEvent.setup()
-  return render(<RouterProvider router={router} />)
+  const user = userEvent.setup()
+  const queryClient = new QueryClient()
+  return {
+    user,
+    ...render(
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>,
+    ),
+  }
 }
 
 export function renderWithQuery(component: JSX.Element) {
-  userEvent.setup()
-  const queryClient = new QueryClient()
+  const router = createMemoryRouter(
+    createRoutesFromElements(<Route path="/" element={component} />),
+    {
+      initialEntries: ['/'],
+    },
+  )
 
+  const user = userEvent.setup()
+  const queryClient = new QueryClient()
   return {
-    user: userEvent,
+    user,
     ...render(
       <QueryClientProvider client={queryClient}>
-        <RouterProvider
-          router={createMemoryRouter(
-            createRoutesFromElements(<Route path="/" element={component} />),
-          )}
-        />
+        <RouterProvider router={router} />
       </QueryClientProvider>,
     ),
   }

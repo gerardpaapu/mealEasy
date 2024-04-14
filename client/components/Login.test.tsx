@@ -1,11 +1,15 @@
-import { renderComponent } from '../test-utils'
+// @vitest-environment jsdom
+
 import { describe, it, expect } from 'vitest'
 import Login from './Login'
 
+import { renderComponent } from '../test-utils'
+import { fireEvent } from '@testing-library/react'
+
 describe('Login Button', () => {
   it('should render a log in button', async () => {
-    const { getByRole } = renderComponent(<Login />)
-    const login = getByRole('button', { name: /log in/i })
-    expect(login).toBeInTheDocument()
+    const screen = renderComponent(<Login />)
+    const login = screen.getByRole('button', { name: /log in/i })
+    expect(login).toBeTruthy()
   })
 })
