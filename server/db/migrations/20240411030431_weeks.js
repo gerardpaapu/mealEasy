@@ -1,6 +1,6 @@
 export async function up(knex) {
   await knex.schema.createTable('weeks', (table) => {
-    table.increments('id').primary()
+    table.integer('id').primary()
     table.integer('user_id').references('users.auth0_id')
     table.integer('monday').references('recipes.id')
     table.integer('tuesday').references('recipes.id')

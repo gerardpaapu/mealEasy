@@ -1,6 +1,6 @@
 export interface UserPreferences {
-  user_id: string
-  preference_id: string
+  user_id: string | undefined
+  preference_id: number
 }
 
 export interface AllUserPreferences extends UserPreferences {
