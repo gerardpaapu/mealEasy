@@ -37,7 +37,7 @@ export default function RecipeCardMedium() {
       obj.ingredients = item.recipe.ingredientLines
       return obj
     })
-    console.log(meals)
+    console.log(data)
 
     // const meals = [
     //   {
