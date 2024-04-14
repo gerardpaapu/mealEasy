@@ -1,6 +1,8 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { Link } from 'react-router-dom'
 import useGetUserById from '../hooks/useGetUserById'
+import LogoutButton from '../components/Logout'
+import Button from '../components/Button'
 
 const preferences = [
   {
@@ -58,9 +60,10 @@ function Profile() {
               <strong>Email:</strong> {data.email}
             </p>
           </div>
-          <button className=" ml-10 mt-5 border-4">
+          <Button>
+            {' '}
             <Link to="edit">Edit Profile</Link>
-          </button>
+          </Button>
         </div>
         <div className="mt-5">
           <h2 className="ml-2 text-2xl">Preferences</h2>
@@ -83,9 +86,10 @@ function Profile() {
             ))}
           </ul>
         </div>
-        <button className=" ml-10 mt-5 border-4">
+        <Button>
           <Link to="/home/preferences">Edit Preferences</Link>
-        </button>
+        </Button>
+        <LogoutButton>Log Out</LogoutButton>
       </div>
     )
 }

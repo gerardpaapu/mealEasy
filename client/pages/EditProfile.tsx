@@ -6,13 +6,14 @@ import {
 } from '../components/Authenticated'
 import { useEffect, useState } from 'react'
 import { User } from '../../models/users'
-
 import useGetUserById from '../hooks/useGetUserById'
 import useUpdateUser from '../hooks/useUpdateUser'
 import Button from '../components/Button'
+import { useNavigate } from 'react-router-dom'
 
 function EditProfile() {
   const { user } = useAuth0()
+  const navigate = useNavigate()
 
   const auth = user?.sub
   const updateUser = useUpdateUser()
@@ -37,7 +38,7 @@ function EditProfile() {
   }, [data])
 
   if (isLoading) {
-    return <p>Retreiving your data</p>
+    return <p>Retrieving your data</p>
   }
 
   if (isError) {
@@ -48,6 +49,8 @@ function EditProfile() {
     e.preventDefault()
     const postData = { ...profile, auth0_id: auth }
     updateUser.mutate(postData)
+
+    navigate('/home/profile')
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -55,7 +58,7 @@ function EditProfile() {
     const value = e.target.value
     setProfile({ ...profile, [name]: value })
   }
-  console.log(profile)
+
   if (data)
     return (
       <>
