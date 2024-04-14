@@ -1,5 +1,3 @@
-import React from 'react'
-
 const RecipeDetail = ({ imageUrl, recipeName }) => (
   <div className="card w-96 bg-white shadow-xl">
     <figure>
