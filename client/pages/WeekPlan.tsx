@@ -15,9 +15,6 @@ export default function WeekPlan() {
     'Sunday',
   ]
 
-  const { data } = useGetWeekById(1)
-  console.log(data?.monday)
-
   const [selectedRecipe, setSelectedRecipe] = useState<ReactNode | null>(null)
 
   const handleRecipeClick = () => {
