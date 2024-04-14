@@ -1,6 +1,8 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { Link } from 'react-router-dom'
 import useGetUserById from '../hooks/useGetUserById'
+import LogoutButton from '../components/Logout'
+import Button from '../components/Button'
 
 const preferences = [
   {
@@ -42,7 +44,9 @@ function Profile() {
   if (data)
     return (
       <div>
-        <h1 className="text-center text-3xl">Welcome {data.nickname} </h1>
+        <h1 className="text-headingGreen mb-14 flex justify-center text-4xl">
+          Welcome {data.nickname}
+        </h1>
         <div className="mt-5">
           <h2 className="mb-5 ml-2 text-2xl">My Personal Details</h2>
           <div className="ml-10">
@@ -59,9 +63,11 @@ function Profile() {
               <strong>Email:</strong> {data.email}
             </p>
           </div>
-          <button className=" ml-10 mt-5 border-4">
+          <Button>
+            {' '}
             <Link to="edit">Edit Profile</Link>
-          </button>
+          </Button>
+          <LogoutButton>Log Out</LogoutButton>
         </div>
         <div className="mt-5">
           <h2 className="ml-2 text-2xl">Preferences</h2>
@@ -84,9 +90,9 @@ function Profile() {
             ))}
           </ul>
         </div>
-        <button className=" ml-10 mt-5 border-4">
+        <Button>
           <Link to="/home/preferences">Edit Preferences</Link>
-        </button>
+        </Button>
       </div>
     )
 }
