@@ -115,67 +115,76 @@ export default function RecipeCardMedium() {
     }
 
     return (
-      <div className="relative flex flex-col items-center justify-center">
-        <div className="flex flex-wrap justify-start">
-          {meals.map((meal, index) => (
-            <div key={index} className="m-4 w-96">
-              <div
-                className={`card card-compact relative h-64 bg-base-100 bg-white shadow-xl ${
-                  isMealSelected(index) ? 'border-4 border-green-500' : ''
-                } ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
-              >
-                <figure onClick={() => handleShowRecipeDetail(index)}>
-                  <img
-                    className="ml-3 mt-3 h-40 w-64 rounded"
-                    src={meal.image.REGULAR.url}
-                    alt={meal.name}
-                  />
-                </figure>
+      <>
+        <div className="relative flex flex-col items-center justify-center">
+          <div className="flex justify-center text-4xl">
+            <h2 className="text-headingGreen">Pick Your Meals</h2>
+          </div>
+          <div className="mb-10 mt-2 flex justify-center">
+            <h3>Choose up to seven meals</h3>
+          </div>
+          <Button className="mb-12" onClick={() => handleSave(meals)}>
+            Save and See Your Week Plan
+          </Button>
+
+          <div className="flex flex-wrap justify-start">
+            {meals.map((meal, index) => (
+              <div key={index} className="m-4 w-96">
                 <div
-                  className="card-body"
-                  onClick={() => handleShowRecipeDetail(index)}
+                  className={`card card-compact relative h-64 cursor-pointer bg-base-100 bg-white shadow-xl hover:bg-gray-100 hover:shadow-lg ${
+                    isMealSelected(index) ? 'border-4 border-green-500' : ''
+                  } ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
                 >
-                  <h2 className="card-title">{meal.name}</h2>
-                </div>
-                <div className="absolute right-2 top-2">
-                  <div className="form-control">
-                    <label className="label cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={isMealSelected(index)}
-                        onChange={() => handleToggleSelection(index)}
-                        className="checkbox-primary checkbox"
-                      />
-                    </label>
+                  <figure onClick={() => handleShowRecipeDetail(index)}>
+                    <img
+                      className="ml-3 mt-3 h-40 w-64 rounded"
+                      src={meal.image.REGULAR.url}
+                      alt={meal.name}
+                    />
+                  </figure>
+                  <div
+                    className="card-body"
+                    onClick={() => handleShowRecipeDetail(index)}
+                  >
+                    <h2 className="card-title">{meal.name}</h2>
+                  </div>
+                  <div className="absolute right-2 top-2">
+                    <div className="form-control">
+                      <label className="label cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={isMealSelected(index)}
+                          onChange={() => handleToggleSelection(index)}
+                          className="checkbox-primary checkbox"
+                        />
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
+            ))}
+          </div>
+          {isSelectionFull && (
+            <div className="fixed left-0 top-0 w-full bg-red-500 py-2 text-center text-white opacity-90">
+              You have selected seven meals. You cannot select more.
             </div>
-          ))}
+          )}
+          {selectedRecipeIndex !== null && (
+            <div
+              className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-65"
+              onClick={handleDetailClick}
+            >
+              <div className="z-10">
+                <RecipeDetail
+                  imageUrl={meals[selectedRecipeIndex].image.REGULAR.url}
+                  recipeName={meals[selectedRecipeIndex].name}
+                  ingredients={meals[selectedRecipeIndex].ingredients}
+                />
+              </div>
+            </div>
+          )}
         </div>
-        {isSelectionFull && (
-          <div className="fixed left-0 top-0 w-full bg-red-500 py-2 text-center text-white">
-            You have selected seven meals. You cannot select more.
-          </div>
-        )}
-        {selectedRecipeIndex !== null && (
-          <div
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
-            onClick={handleDetailClick}
-          >
-            <div className="z-10">
-              <RecipeDetail
-                imageUrl={meals[selectedRecipeIndex].image.REGULAR.url}
-                recipeName={meals[selectedRecipeIndex].name}
-                ingredients={meals[selectedRecipeIndex].ingredients}
-              />
-            </div>
-          </div>
-        )}
-        <Button onClick={() => handleSave(meals)}>
-          Save and See your plan
-        </Button>
-      </div>
+      </>
     )
   }
 }

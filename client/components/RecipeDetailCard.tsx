@@ -1,9 +1,9 @@
 import React from 'react'
 
 const RecipeDetail = ({ imageUrl, recipeName, ingredients }) => (
-  <div className="card w-96 bg-white shadow-xl">
+  <div className="card w-96 cursor-pointer bg-white shadow-xl">
     <figure>
-      <img className="mt-5" src={imageUrl} alt="Recipe" />
+      <img className="mt-5 rounded" src={imageUrl} alt="Recipe" />
     </figure>
     <div className="card-body">
       <h2 className="card-title">{recipeName}</h2>
