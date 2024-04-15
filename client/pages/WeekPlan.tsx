@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import RecipeDetail from '../components/RecipeDetailCard'
 import Button from '../components/Button'
-import AddUser from '../components/AddUser'
+
 import useGetUserById from '../hooks/useGetUserById'
 import { useAuth0 } from '@auth0/auth0-react'
 import { addUser } from '../apis/backend-apis/users'
 import useGetWeekById from '../hooks/useGetWeeks'
+import { getRecipeById } from '../apis/backend-apis/recipes'
+import { WeeksId } from '../../models/weeks'
 
 export default function WeekPlan() {
   const initialDaysOfWeek = [
@@ -56,15 +58,24 @@ export default function WeekPlan() {
 
   const [daysOfWeek, setDaysOfWeek] = useState(initialDaysOfWeek)
   const [mealPlan, setMealPlan] = useState(
-    initialDaysOfWeek.reduce((acc, day, index) => {
-      acc[day] = meals[index % meals.length].name // Assign a meal to each day from the meals array cyclically
-      return acc
-    }, {}),
+    // initialDaysOfWeek.reduce((acc, day, index) => {
+    //   acc[day] = meals[index % meals.length].name // Assign a meal to each day from the meals array cyclically
+    //   return acc
+    // }, {}),
+    [Number],
   )
 
   const [selectedRecipe, setSelectedRecipe] = useState(null)
-
+  const [recipes, setRecipes] = useState([])
   const { data: week } = useGetWeekById(2)
+  const [currentWeek, setCurrentWeek] = useState(
+    // initialDaysOfWeek.reduce((acc, day, index) => {
+    //   acc[day] = recipes[index % recipes.length].name // Assign a meal to each day from the meals array cyclically
+    //   return acc
+    // }, {}),
+    [],
+  )
+
   console.log(week?.monday)
   useEffect(() => {
     if (week) {
@@ -81,6 +92,29 @@ export default function WeekPlan() {
       setMealPlan(arr)
     }
   }, [week])
+
+  useEffect(() => {
+    const getRecipes = async () => {
+      try {
+        const promises = mealPlan.map((item) => getRecipeById(item))
+        const recipes = await Promise.all(promises)
+        setRecipes(recipes)
+        setCurrentWeek(
+          initialDaysOfWeek.reduce((acc, day, index) => {
+            acc[day] = recipes[index % recipes.length].name // Assign a meal to each day from the meals array cyclically
+            return acc
+          }, {}),
+        )
+      } catch (error) {
+        console.error('Error fetching recipes')
+      }
+    }
+    getRecipes()
+  }, [mealPlan])
+
+  console.log('new recipes', recipes)
+  // const recipes = getRecipes()
+  // console.log(recipes)
 
   const handleRecipeClick = () => {
     setSelectedRecipe(
@@ -167,7 +201,7 @@ export default function WeekPlan() {
                 >
                   <div className="p-2">
                     <h2 className="card-title text-lg font-semibold">
-                      {mealPlan[day]}
+                      {currentWeek[day]}
                     </h2>
                     <button onClick={handleRecipeClick}>Recipe Detail</button>
                   </div>
