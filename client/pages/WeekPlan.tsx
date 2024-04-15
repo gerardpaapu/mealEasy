@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import RecipeDetail from '../components/RecipeDetailCard'
 import Button from '../components/Button'
@@ -6,6 +6,7 @@ import AddUser from '../components/AddUser'
 import useGetUserById from '../hooks/useGetUserById'
 import { useAuth0 } from '@auth0/auth0-react'
 import { addUser } from '../apis/backend-apis/users'
+import useGetWeekById from '../hooks/useGetWeeks'
 
 export default function WeekPlan() {
   const initialDaysOfWeek = [
@@ -63,6 +64,24 @@ export default function WeekPlan() {
 
   const [selectedRecipe, setSelectedRecipe] = useState(null)
 
+  const { data: week } = useGetWeekById(2)
+  console.log(week?.monday)
+  useEffect(() => {
+    if (week) {
+      const arr = [
+        week.monday,
+        week.tuesday,
+        week.wednesday,
+        week.thursday,
+        week.friday,
+        week.saturday,
+        week.sunday,
+      ]
+
+      setMealPlan(arr)
+    }
+  }, [week])
+
   const handleRecipeClick = () => {
     setSelectedRecipe(
       selectedRecipe === null ? (
@@ -94,6 +113,8 @@ export default function WeekPlan() {
   const handleDragOver = (e) => {
     e.preventDefault()
   }
+
+  //---- Add user ---
   const { user } = useAuth0()
   const auth = user?.sub
   const { data, isLoading, isError } = useGetUserById(auth)
@@ -116,11 +137,12 @@ export default function WeekPlan() {
   } else {
     console.log('user already exsits')
   }
+  //-------
 
   return (
     <div>
       <div className="relative flex flex-col items-center justify-center">
-        <h1 className="text-headingGreen mb-14 flex justify-center text-4xl">
+        <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
           Your week
         </h1>
         <Link to="recipes">
@@ -133,7 +155,7 @@ export default function WeekPlan() {
           <div className="ml-12 flex flex-col items-start">
             {daysOfWeek.map((day, index) => (
               <div key={index} className="h-32">
-                <h2 className="text-headingGreen mb-1 text-xl font-semibold">
+                <h2 className="mb-1 text-xl font-semibold text-headingGreen">
                   {day}
                 </h2>
                 <div
