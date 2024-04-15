@@ -119,15 +119,21 @@ export default function WeekPlan() {
 
   return (
     <div>
-      <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
-        Your week
-      </h1>
+      <div className="relative flex flex-col items-center justify-center">
+        <h1 className="text-headingGreen mb-14 flex justify-center text-4xl">
+          Your week
+        </h1>
+        <Link to="recipes">
+          <Button>Back to Recipes</Button>
+        </Link>
+      </div>
+
       <div className="mb-20 flex">
         <div>
           <div className="ml-12 flex flex-col items-start">
             {daysOfWeek.map((day, index) => (
               <div key={index} className="h-32">
-                <h2 className="mb-1 text-xl font-semibold text-headingGreen">
+                <h2 className="text-headingGreen mb-1 text-xl font-semibold">
                   {day}
                 </h2>
                 <div
@@ -147,9 +153,6 @@ export default function WeekPlan() {
               </div>
             ))}
           </div>
-          <Link to="recipes">
-            <Button>Back to Recipes</Button>
-          </Link>
         </div>
         <div className="ml-40">{selectedRecipe}</div>
       </div>

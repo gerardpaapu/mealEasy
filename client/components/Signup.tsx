@@ -15,7 +15,7 @@ function Signup() {
   }
 
   return (
-    <Button onClick={handleLogin} className="btn btn-accent w-40">
+    <Button onClick={handleLogin} className=" w-40">
       Sign Up
     </Button>
   )

@@ -14,9 +14,12 @@ function Login() {
   }
 
   return (
-    <Button onClick={handleLogin} className="btn btn-outline btn-accent w-40">
+    <button
+      onClick={handleLogin}
+      className="hover:text-buttonGreen border-buttonGreen text-buttonGreen btn btn-outline w-40 shadow-none hover:bg-transparent"
+    >
       Log In
-    </Button>
+    </button>
   )
 }
 

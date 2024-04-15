@@ -131,8 +131,8 @@ export default function RecipeCardMedium() {
             {meals.map((meal, index) => (
               <div key={index} className="m-4 w-96">
                 <div
-                  className={`card card-compact relative h-64 cursor-pointer bg-base-100 bg-white shadow-xl hover:bg-gray-100 hover:shadow-lg ${
-                    isMealSelected(index) ? 'border-4 border-green-500' : ''
+                  className={`card card-compact relative h-64 cursor-pointer border-4 border-white bg-base-100 bg-white shadow-xl hover:bg-lime-100 hover:shadow-lg ${
+                    isMealSelected(index) ? 'border-green-500' : ''
                   } ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
                 >
                   <figure onClick={() => handleShowRecipeDetail(index)}>
