@@ -100,7 +100,17 @@ function Preferences() {
     return (
       <>
         <div className="mt-5">
-          <h2 className="ml-2 text-2xl">Preferences</h2>
+          <div className="flex justify-center text-4xl">
+            <h2 className="text-headingGreen">Pick Your Meals</h2>
+
+            <button
+              onClick={handleSave}
+              className="fixed right-20 top-20 rounded-lg border-none bg-green-600 px-4 py-1 font-bold"
+            >
+              Save
+            </button>
+          </div>
+
           <ul className="ml-10">
             {typesArr.map((item) => (
               <li key={item}>
@@ -128,12 +138,6 @@ function Preferences() {
             ))}
           </ul>
         </div>
-        <button
-          onClick={handleSave}
-          className="fixed right-20 top-20 rounded-lg border-none bg-green-600 px-4 py-1 font-bold"
-        >
-          Save
-        </button>
       </>
     )
   }
