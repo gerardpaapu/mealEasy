@@ -7,6 +7,8 @@ import { addARecipe, getRecipeByName } from '../apis/backend-apis/recipes'
 import { Recipes } from '../../models/recipes'
 import { Weeks } from '../../models/weeks'
 import { addWeek } from '../apis/backend-apis/weeks'
+import Button from './Button'
+import { useNavigate } from 'react-router-dom'
 
 export default function RecipeCardMedium() {
   const [selectedItems, setSelectedItems] = useState([])
@@ -25,6 +27,7 @@ export default function RecipeCardMedium() {
 
   const { data, isLoading, isError } = useGetApiRecipes(string)
 
+  const navigate = useNavigate()
 
   async function handleSave(meals) {
     const mealsArr = selectedItems.map((index) => meals[index])
@@ -67,10 +70,11 @@ export default function RecipeCardMedium() {
         weekObj[week[i]] = id
       }),
     )
-    console.log(weekObj)
-    await addWeek(weekObj)
-  }
+   
 
+    await addWeek(weekObj)
+    navigate('/home')
+  }
 
   if (isLoading) {
     return <p>is Loading ...</p>
@@ -88,7 +92,6 @@ export default function RecipeCardMedium() {
       obj.ingredients = item.recipe.ingredientLines
       return obj
     })
-
 
     const handleShowRecipeDetail = (index) => {
       setSelectedRecipeIndex(index)
@@ -111,7 +114,6 @@ export default function RecipeCardMedium() {
     const handleDetailClick = () => {
       setSelectedRecipeIndex(null) // closing detail view when detail is clicked
     }
-
 
     return (
       <div className="relative flex flex-col items-center justify-center">
@@ -171,9 +173,9 @@ export default function RecipeCardMedium() {
             </div>
           </div>
         )}
-        <button onClick={() => handleSave(meals)}>
+        <Button onClick={() => handleSave(meals)}>
           Save and See your plan
-        </button>
+        </Button>
       </div>
     )
   }

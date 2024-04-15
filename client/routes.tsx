@@ -8,6 +8,7 @@ import Preferences from './pages/Preferences'
 import App from './components/App'
 import WeekPlan from './pages/WeekPlan'
 
+
 const routes = createRoutesFromElements(
   <>
     <Route path="/" element={<Landing />} />
