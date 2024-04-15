@@ -70,7 +70,6 @@ export default function RecipeCardMedium() {
         weekObj[week[i]] = id
       }),
     )
-   
 
     await addWeek(weekObj)
     navigate('/home')
@@ -121,7 +120,7 @@ export default function RecipeCardMedium() {
           {meals.map((meal, index) => (
             <div key={index} className="m-4 w-96">
               <div
-                className={`card card-compact relative bg-base-100 bg-white shadow-xl ${
+                className={`card card-compact relative h-64 bg-base-100 bg-white shadow-xl ${
                   isMealSelected(index) ? 'border-4 border-green-500' : ''
                 } ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
               >
