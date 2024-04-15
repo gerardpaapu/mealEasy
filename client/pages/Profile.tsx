@@ -33,7 +33,16 @@ function Profile() {
     const arr = Array.from(new Set(preferences?.map((item) => item.type)))
     return arr
   }
+
   const typesArr = getTypes()
+
+  // const getNames = () => {
+  //   const arr = Array.from(new Set(preferences?.map((item) => item.name)))
+  //   return arr
+  // }
+  // const namesArr = getNames()
+
+  // console.log(namesArr)
 
   if (isLoading) {
     return <p>is Loading ...</p>
@@ -80,13 +89,19 @@ function Profile() {
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </h3>
                 <ul className="ml-5">
-                  {preferences?.map((pref) =>
-                    pref.type === item ? (
-                      <li key={pref.name} className="mb-2">
-                        {pref.name.charAt(0).toUpperCase() + pref.name.slice(1)}
-                      </li>
-                    ) : null,
-                  )}
+                  {preferences
+                    ?.filter(
+                      (pref, index, self) =>
+                        index === self.findIndex((p) => p.name === pref.name),
+                    )
+                    .map((pref) =>
+                      pref.type === item ? (
+                        <li key={pref.name} className="mb-2">
+                          {pref.name.charAt(0).toUpperCase() +
+                            pref.name.slice(1)}
+                        </li>
+                      ) : null,
+                    )}
                 </ul>
               </li>
             ))}
