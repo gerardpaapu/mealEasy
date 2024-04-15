@@ -1,11 +1,23 @@
+import React from 'react'
 import Signup from '../components/Signup'
 import Login from '../components/Login'
-import WeekPlan from './WeekPlan'
+
+
+import ImageFrontPage from '../components/ImageFrontPage'
+
+const ImageTextSection = ({ src, alt, text }) => (
+  <div className="mb-8 flex w-full flex-col items-center sm:mb-0 sm:w-1/3">
+    <ImageFrontPage src={src} alt={alt} className="w-3/4" />
+    <p className="mt-3 text-center">{text}</p>
+  </div>
+)
+
 
 function Landing() {
   return (
     <div className="landing-body min-h-screen w-screen">
       <div className="flex justify-end">
+
         {/* <Login />
       <Register /> */}
 
@@ -19,35 +31,42 @@ function Landing() {
             alt="MealEasy Logo"
             className="w-80"
           />
+
+        <div className="mr-10 mt-10">
+          <div className="flex space-x-4">
+            {' '}
+            {/* Add space between login and signup */}
+            <Signup />
+            <Login />
+          </div>
+
         </div>
+      </div>
+      <div className="mt-20 flex flex-col items-center justify-center sm:mt-40">
+        <img
+          src="Public/images/blackLogo.png"
+          alt="MealEasy Logo"
+          className="w-64 sm:w-96"
+        />
         <div className="m-10 flex justify-center">
           <Signup />
         </div>
-        <div className="flex justify-around">
-          <div className="flex w-1/3 flex-col flex-wrap content-center">
-            <img
-              src="Public/images/recipebook.jpg"
-              alt="recipe book"
-              className="b-2 max-h-70 w-3/4"
-            />
-            <p>All your recipes in one place!</p>
-          </div>
-          <div className="flex w-1/3 flex-col flex-wrap content-center">
-            <img
-              src="Public/images/dinnertable.jpg"
-              alt="recipe book"
-              className="b-2 max-h-70 w-3/4"
-            />
-            <p>More time to relax with the family!</p>
-          </div>
-          <div className="flex w-1/3 flex-col flex-wrap content-center">
-            <img
-              src="Public/images/shopping.jpg"
-              alt="recipe book"
-              className="b-2 max-h-70 w-3/4"
-            />
-            <p>Shopping lists made easy</p>
-          </div>
+        <div className="mt-20 flex flex-wrap justify-center sm:mt-24">
+          <ImageTextSection
+            src="Public/images/recipebook.jpg"
+            alt="recipe book"
+            text="All your recipes in one place!"
+          />
+          <ImageTextSection
+            src="Public/images/dinnertable.jpg"
+            alt="dinner table"
+            text="More time to relax with the family!"
+          />
+          <ImageTextSection
+            src="Public/images/shopping.jpg"
+            alt="shopping"
+            text="Shopping lists made easy"
+          />
         </div>
       </div>
     </div>
