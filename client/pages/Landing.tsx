@@ -1,5 +1,6 @@
 import Signup from '../components/Signup'
 import Login from '../components/Login'
+import WeekPlan from './WeekPlan'
 
 function Landing() {
   return (
@@ -7,6 +8,7 @@ function Landing() {
       <div className="flex justify-end">
         {/* <Login />
       <Register /> */}
+
         <Signup />
         <Login />
       </div>
