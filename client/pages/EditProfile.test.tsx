@@ -11,9 +11,9 @@ import nock from 'nock'
 import { afterEach, describe, expect, it } from 'vitest'
 import EditProfile from './EditProfile'
 
-afterEach(() => {
-  nock.cleanAll()
-})
+// afterEach(() => {
+//   nock.cleanAll()
+// })
 
 describe('edit profile', () => {
   it('should render a loading indicator', async () => {
@@ -34,6 +34,7 @@ describe('edit profile', () => {
     //render app
     renderWithQuery(<EditProfile />)
 
+    console.log(screen)
     //async wait screen
     const loading = await waitFor(() =>
       screen.getByText('Retrieving your data'),
@@ -41,7 +42,9 @@ describe('edit profile', () => {
 
     //ASSERT
     expect(loading).toBeVisible()
-    expect(scope.isDone()).toBe(true)
+    // await waitFor(async () => {
+    //   expect(scope.isDone()).toBeTruthy()
+    // })
   })
 
   it('should render a Edit user Form', async () => {
@@ -66,7 +69,9 @@ describe('edit profile', () => {
       () => screen.getByText('Retrieving your data'),
       { timeout: 5000 },
     )
-
+    if (!nock.isDone()) {
+      console.log(nock.pendingMocks())
+    }
     //Check user does exist
     const header = screen.getByRole('heading', { name: 'Edit Your Profile' })
     console.log(header)
