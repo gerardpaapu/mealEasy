@@ -95,8 +95,11 @@ export default function RecipeCardMedium() {
     const handleShowRecipeDetail = (index) => {
       setSelectedRecipeIndex(index)
     }
-
     const handleToggleSelection = (index) => {
+      if (selectedItems.length >= 7 && !isMealSelected(index)) {
+        return
+      }
+
       const selectedIndex = selectedItems.indexOf(index)
       if (selectedIndex === -1) {
         setSelectedItems([...selectedItems, index])
@@ -131,11 +134,11 @@ export default function RecipeCardMedium() {
             {meals.map((meal, index) => (
               <div key={index} className="m-4 w-96">
                 <div
-                  className={` card card-compact relative h-64 cursor-pointer ${
+                  className={`card card-compact relative h-64 cursor-pointer ${
                     isMealSelected(index)
-                      ? 'border-buttonGreen border-4'
+                      ? 'border-buttonGreen border-2 '
                       : 'border-transparent'
-                  } bg-white shadow-md hover:shadow-2xl ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
+                  } hover:shadow-buttonGreen bg-white shadow-sm hover:shadow-md ${isSelectionFull && !isMealSelected(index) ? 'opacity-50 hover:shadow-transparent' : ''}`}
                 >
                   <figure onClick={() => handleShowRecipeDetail(index)}>
                     <img
