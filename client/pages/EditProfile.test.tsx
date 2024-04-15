@@ -41,7 +41,7 @@ describe('edit profile', () => {
 
     //ASSERT
     expect(loading).toBeVisible()
-    // expect(scope.isDone()).toBe(true)
+    expect(scope.isDone()).toBe(true)
   })
 
   it('should render a Edit user Form', async () => {
