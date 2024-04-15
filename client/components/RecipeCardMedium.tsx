@@ -70,6 +70,7 @@ export default function RecipeCardMedium() {
         weekObj[week[i]] = id
       }),
     )
+   
 
     await addWeek(weekObj)
     navigate('/home')
