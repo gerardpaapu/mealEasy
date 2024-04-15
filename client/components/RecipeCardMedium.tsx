@@ -3,6 +3,10 @@ import React, { useState } from 'react'
 import useGetUserPreference from '../hooks/useGetUserPreferences'
 import useGetApiRecipes from '../hooks/useGetApiRecipes'
 import RecipeDetail from './RecipeDetailCard'
+import { addARecipe, getRecipeByName } from '../apis/backend-apis/recipes'
+import { Recipes } from '../../models/recipes'
+import { Weeks } from '../../models/weeks'
+import { addWeek } from '../apis/backend-apis/weeks'
 
 export default function RecipeCardMedium() {
   const [selectedItems, setSelectedItems] = useState([])
@@ -21,6 +25,53 @@ export default function RecipeCardMedium() {
 
   const { data, isLoading, isError } = useGetApiRecipes(string)
 
+
+  async function handleSave(meals) {
+    const mealsArr = selectedItems.map((index) => meals[index])
+    const weekObj: Weeks = {
+      user_id: userId,
+
+      created_on: Date.now(),
+    }
+
+    const week = [
+      'monday',
+      'tuesday',
+      'wednesday',
+      'thursday',
+      'friday',
+      'saturday',
+      'sunday',
+    ]
+
+    await Promise.all(
+      mealsArr.map(async (meal) => {
+        const arr = await getRecipeByName(meal.name)
+
+        if (arr.length === 0) {
+          const obj: Recipes = { name: '', ingredients: '', image: '' }
+          obj.name = meal.name
+          obj.image = meal.image.LARGE.url
+          obj.ingredients = meal.ingredients.join('_')
+          console.log(obj)
+          await addARecipe(obj)
+        }
+      }),
+    )
+
+    // After all recipes are added, log the results
+    await Promise.all(
+      mealsArr.map(async (meal, i) => {
+        const arr = await getRecipeByName(meal.name)
+        const id = arr[0].id
+        weekObj[week[i]] = id
+      }),
+    )
+    console.log(weekObj)
+    await addWeek(weekObj)
+  }
+
+
   if (isLoading) {
     return <p>is Loading ...</p>
   }
@@ -37,6 +88,7 @@ export default function RecipeCardMedium() {
       obj.ingredients = item.recipe.ingredientLines
       return obj
     })
+
 
     const handleShowRecipeDetail = (index) => {
       setSelectedRecipeIndex(index)
@@ -59,6 +111,7 @@ export default function RecipeCardMedium() {
     const handleDetailClick = () => {
       setSelectedRecipeIndex(null) // closing detail view when detail is clicked
     }
+
 
     return (
       <div className="relative flex flex-col items-center justify-center">
@@ -118,6 +171,9 @@ export default function RecipeCardMedium() {
             </div>
           </div>
         )}
+        <button onClick={() => handleSave(meals)}>
+          Save and See your plan
+        </button>
       </div>
     )
   }

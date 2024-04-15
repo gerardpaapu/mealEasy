@@ -1,13 +1,12 @@
 export async function seed(knex) {
-  // await knex('preferences').del()
+
+  await knex('preferences').del()
   await knex('preferences').insert([
-    {
-      id: 1,
-      name: 'balanced',
-      type: 'diet',
-    },
+    
+
     {
       id: 2,
+
       name: 'high-protein',
       type: 'diet',
     },
@@ -39,7 +38,7 @@ export async function seed(knex) {
     },
     {
       id: 8,
-      name: 'mediterranean',
+      name: 'Mediterranean',
       type: 'health',
     },
     {
