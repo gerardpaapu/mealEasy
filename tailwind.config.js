@@ -6,6 +6,8 @@ export default {
       colors: {
         customGreen: '#7bb44d',
         headingGreen: '#429400',
+        lightGreen: '#f8fef0',
+        buttonGreen: '#419400',
       },
     },
   },
