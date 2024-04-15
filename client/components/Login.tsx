@@ -14,10 +14,7 @@ function Login() {
   }
 
   return (
-    <Button
-      onClick={handleLogin}
-      className="w-40 border-2 border-lime-900 bg-white px-4 py-2 font-bold text-black hover:bg-lime-200"
-    >
+    <Button onClick={handleLogin} className="btn btn-outline btn-accent w-40">
       Log In
     </Button>
   )
