@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom'
 import RecipeCardMedium from '../components/RecipeCardMedium'
 import Button from '../components/Button'
+import { useNavigate } from 'react-router-dom'
+
+function handleSave(meals) {
+  console.log(meals)
+}
 
 function Recipe() {
   return (
@@ -16,9 +21,6 @@ function Recipe() {
       <div className="flex h-full items-center justify-center">
         <div className="mb-4 ml-16">
           <RecipeCardMedium />
-          <Link to="/home">
-            <Button>Save and See your plan</Button>
-          </Link>
         </div>
       </div>
     </div>
