@@ -131,9 +131,11 @@ export default function RecipeCardMedium() {
             {meals.map((meal, index) => (
               <div key={index} className="m-4 w-96">
                 <div
-                  className={`card card-compact relative h-64 cursor-pointer border-4 border-white bg-base-100 bg-white shadow-xl hover:bg-lime-100 hover:shadow-lg ${
-                    isMealSelected(index) ? 'border-green-500' : ''
-                  } ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
+                  className={` card card-compact relative h-64 cursor-pointer ${
+                    isMealSelected(index)
+                      ? 'border-buttonGreen border-4'
+                      : 'border-transparent'
+                  } bg-white shadow-md hover:shadow-2xl ${isSelectionFull && !isMealSelected(index) ? 'opacity-50' : ''}`}
                 >
                   <figure onClick={() => handleShowRecipeDetail(index)}>
                     <img
