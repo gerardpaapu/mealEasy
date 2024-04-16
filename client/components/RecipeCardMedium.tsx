@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import useGetUserPreference from '../hooks/useGetUserPreferences'
 import useGetApiRecipes from '../hooks/useGetApiRecipes'
 import RecipeDetail from './RecipeDetailCard'
@@ -10,24 +10,62 @@ import { addWeek } from '../apis/backend-apis/weeks'
 import Button from './Button'
 import { useNavigate } from 'react-router-dom'
 
-export default function RecipeCardMedium() {
+export default function RecipeCardMedium({ input, setInput }) {
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(null)
+  const [meals, setMeals] = useState([])
+  const mealsObjArrRef = useRef()
+  // const refetch = useRef(false)
 
   const { user } = useAuth0()
   const auth = user?.sub
   const userId = auth ?? '-1'
 
   const { data: userPreference } = useGetUserPreference(userId)
+
   const searchString = userPreference
     ?.map((pref) => `&${pref.type}=${pref.name}`)
     .join('')
 
   const string = searchString ?? '-1'
   console.log(string)
-  const { data, isLoading, isError } = useGetApiRecipes(string)
+  const { data, isLoading, isError, refetch } = useGetApiRecipes(string)
+
+  useEffect(() => {
+    if (data) {
+      // Update mealsObjArrRef.current instead of mealsObjArr
+      mealsObjArrRef.current = data.hits.map((item) => {
+        const obj = {}
+        obj.name = item.recipe.label
+        obj.image = item.recipe.images
+        obj.ingredients = item.recipe.ingredientLines
+        return obj
+      })
+      // Use setMeals to trigger a re-render with the updated value
+      setMeals(mealsObjArrRef.current)
+    }
+  }, [data])
+
+  console.log(meals)
 
   const navigate = useNavigate()
+
+  function handleFilter() {
+    const filteredMeals = meals.filter((meal) =>
+      meal.ingredients.find((item) => item.split(' ').includes(input)),
+    )
+
+    setMeals(filteredMeals)
+  }
+
+  function handleClear() {
+    setInput('')
+    setMeals(mealsObjArrRef.current)
+  }
+
+  function handleRefetch() {
+    refetch()
+  }
 
   async function handleSave(meals) {
     const mealsArr = selectedItems.map((index) => meals[index])
@@ -83,41 +121,41 @@ export default function RecipeCardMedium() {
     return <p>An Error has occurred. </p>
   }
 
-  if (data) {
-    const meals = data.hits.map((item) => {
-      const obj = {}
-      obj.name = item.recipe.label
-      obj.image = item.recipe.images
+  // if (data) {
+  //   const meals = data.hits.map((item) => {
+  //     const obj = {}
+  //     obj.name = item.recipe.label
+  //     obj.image = item.recipe.images
 
-      obj.ingredients = item.recipe.ingredientLines
-      return obj
-    })
+  //     obj.ingredients = item.recipe.ingredientLines
+  //     return obj
+  //   })
 
-    const handleShowRecipeDetail = (index) => {
-      setSelectedRecipeIndex(index)
-    }
-    const handleToggleSelection = (index) => {
-      if (selectedItems.length >= 7 && !isMealSelected(index)) {
-        return
-      }
-
-      const selectedIndex = selectedItems.indexOf(index)
-      if (selectedIndex === -1) {
-        setSelectedItems([...selectedItems, index])
-      } else {
-        const updatedSelection = [...selectedItems]
-        updatedSelection.splice(selectedIndex, 1)
-        setSelectedItems(updatedSelection)
-      }
+  const handleShowRecipeDetail = (index) => {
+    setSelectedRecipeIndex(index)
+  }
+  const handleToggleSelection = (index) => {
+    if (selectedItems.length >= 7 && !isMealSelected(index)) {
+      return
     }
 
-    const isMealSelected = (index) => selectedItems.includes(index)
-    const isSelectionFull = selectedItems.length >= 7
-
-    const handleDetailClick = () => {
-      setSelectedRecipeIndex(null) // closing detail view when detail is clicked
+    const selectedIndex = selectedItems.indexOf(index)
+    if (selectedIndex === -1) {
+      setSelectedItems([...selectedItems, index])
+    } else {
+      const updatedSelection = [...selectedItems]
+      updatedSelection.splice(selectedIndex, 1)
+      setSelectedItems(updatedSelection)
     }
+  }
 
+  const isMealSelected = (index) => selectedItems.includes(index)
+  const isSelectionFull = selectedItems.length >= 7
+
+  const handleDetailClick = () => {
+    setSelectedRecipeIndex(null) // closing detail view when detail is clicked
+  }
+  if (meals) {
     return (
       <>
         <div className="relative flex flex-col items-center justify-center">
@@ -127,9 +165,35 @@ export default function RecipeCardMedium() {
           <div className="mb-10 mt-2 flex justify-center">
             <h3>Choose up to seven meals</h3>
           </div>
-          <Button className="mb-12" onClick={() => handleSave(meals)}>
-            Save and See Your Week Plan
-          </Button>
+          <div className="flex flex-col md:flex-row md:items-start md:justify-start">
+            {/* Filter button  */}
+            <Button
+              className="mb-12 md:mb-0 md:mr-4"
+              onClick={() => handleFilter()}
+            >
+              Filter
+            </Button>
+            {/* clear button */}
+            <Button
+              className="mb-12 md:mb-0 md:mr-4"
+              onClick={() => handleClear()}
+            >
+              Clear Search
+            </Button>
+
+            {/* refetch button */}
+            <Button
+              className="mb-12 md:mb-0 md:mr-4"
+              onClick={() => handleRefetch()}
+            >
+              More Recipes
+            </Button>
+
+            {/* Save button */}
+            <Button className="mb-12" onClick={() => handleSave(meals)}>
+              Save and See Your Week Plan
+            </Button>
+          </div>
 
           <div className="flex flex-wrap justify-center">
             {meals.map((meal, index) => (
@@ -137,9 +201,9 @@ export default function RecipeCardMedium() {
                 <div
                   className={`card card-compact relative h-64 cursor-pointer ${
                     isMealSelected(index)
-                      ? 'border-2 border-buttonGreen '
+                      ? 'border-buttonGreen border-2 '
                       : 'border-transparent'
-                  } bg-white shadow-sm hover:shadow-md hover:shadow-buttonGreen ${isSelectionFull && !isMealSelected(index) ? 'opacity-50 hover:shadow-transparent' : ''}`}
+                  } hover:shadow-buttonGreen bg-white shadow-sm hover:shadow-md ${isSelectionFull && !isMealSelected(index) ? 'opacity-50 hover:shadow-transparent' : ''}`}
                 >
                   <figure onClick={() => handleShowRecipeDetail(index)}>
                     <img
