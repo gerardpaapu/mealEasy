@@ -19,7 +19,7 @@ function Recipe() {
             placeholder="Input your ingredients"
             value={input}
           />
-          <RecipeCardMedium input={input} />
+          <RecipeCardMedium input={input} setInput={setInput} />
         </div>
       </div>
     </div>

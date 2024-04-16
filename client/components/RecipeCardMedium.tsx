@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import useGetUserPreference from '../hooks/useGetUserPreferences'
 import useGetApiRecipes from '../hooks/useGetApiRecipes'
 import RecipeDetail from './RecipeDetailCard'
@@ -10,12 +10,12 @@ import { addWeek } from '../apis/backend-apis/weeks'
 import Button from './Button'
 import { useNavigate } from 'react-router-dom'
 
-export default function RecipeCardMedium({ input }) {
+export default function RecipeCardMedium({ input, setInput }) {
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(null)
   const [meals, setMeals] = useState([])
-
-  console.log(input)
+  const mealsObjArrRef = useRef()
+  // const refetch = useRef(false)
 
   const { user } = useAuth0()
   const auth = user?.sub
@@ -29,22 +29,21 @@ export default function RecipeCardMedium({ input }) {
 
   const string = searchString ?? '-1'
   console.log(string)
-  const { data, isLoading, isError } = useGetApiRecipes(string)
+  const { data, isLoading, isError, refetch } = useGetApiRecipes(string)
 
   useEffect(() => {
-    let mealsObjArr
     if (data) {
-      mealsObjArr = data.hits.map((item) => {
+      // Update mealsObjArrRef.current instead of mealsObjArr
+      mealsObjArrRef.current = data.hits.map((item) => {
         const obj = {}
         obj.name = item.recipe.label
         obj.image = item.recipe.images
-
         obj.ingredients = item.recipe.ingredientLines
         return obj
       })
+      // Use setMeals to trigger a re-render with the updated value
+      setMeals(mealsObjArrRef.current)
     }
-
-    setMeals(mealsObjArr)
   }, [data])
 
   console.log(meals)
@@ -57,6 +56,15 @@ export default function RecipeCardMedium({ input }) {
     )
 
     setMeals(filteredMeals)
+  }
+
+  function handleClear() {
+    setInput('')
+    setMeals(mealsObjArrRef.current)
+  }
+
+  function handleRefetch() {
+    refetch()
   }
 
   async function handleSave(meals) {
@@ -158,12 +166,27 @@ export default function RecipeCardMedium({ input }) {
             <h3>Choose up to seven meals</h3>
           </div>
           <div className="flex flex-col md:flex-row md:items-start md:justify-start">
-            {/* Filter button on the extreme left */}
+            {/* Filter button  */}
             <Button
               className="mb-12 md:mb-0 md:mr-4"
               onClick={() => handleFilter()}
             >
               Filter
+            </Button>
+            {/* clear button */}
+            <Button
+              className="mb-12 md:mb-0 md:mr-4"
+              onClick={() => handleClear()}
+            >
+              Clear Search
+            </Button>
+
+            {/* refetch button */}
+            <Button
+              className="mb-12 md:mb-0 md:mr-4"
+              onClick={() => handleRefetch()}
+            >
+              More Recipes
             </Button>
 
             {/* Save button */}
