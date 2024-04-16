@@ -22,3 +22,7 @@ export async function getUserPreferences(authId: string) {
 
   return preferences.body as AllUserPreferences[]
 }
+
+export async function delUserPreferences(authId: string) {
+  await request.delete(`${rootUrl}/preferences/delete/${authId}`)
+}

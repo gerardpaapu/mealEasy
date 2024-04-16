@@ -1,12 +1,15 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { addUser } from '../apis/backend-apis/users'
 import { User } from '../../models/users'
-import useGetPreferences from '../hooks/useGetPreferences'
+
 import { useEffect, useState } from 'react'
 import { Preferences as Preferencetype } from '../../models/preferences'
 import { UserPreferences } from '../../models/userPreferences'
-import useGetUserById from '../hooks/useGetUserById'
-import { addUserPreferences } from '../apis/backend-apis/preferences'
+
+import {
+  addUserPreferences,
+  delUserPreferences,
+} from '../apis/backend-apis/preferences'
 import { useNavigate } from 'react-router-dom'
 import usePreferencePage from '../hooks/usePreferencePage'
 
@@ -22,8 +25,13 @@ function Preferences() {
 
   const auth = user?.sub
   const userId = auth ?? '-1'
-  const { currentUser, preferences, isLoading, isError } =
-    usePreferencePage(userId)
+  const {
+    currentUser,
+    preferences,
+    userPreferences: userBasedPreference,
+    isLoading,
+    isError,
+  } = usePreferencePage(userId)
 
   // const { data: preferences, isLoading, isError } = useGetPreferences()
   // const { data: currentUser } = useGetUserById(userId)
@@ -37,13 +45,25 @@ function Preferences() {
   // }
 
   useEffect(() => {
+    const userChoice = userBasedPreference?.map((item) => item.name)
     if (preferences) {
       const state: BtnColor = {}
       preferences.forEach((item) => {
-        state[item.name] = 'bg-yellow-500'
+        if (userChoice?.includes(item.name)) {
+          state[item.name] = 'bg-green-600'
+        } else state[item.name] = 'bg-yellow-500'
       })
       setBtnColor(state)
     }
+
+    // userBasedPreference?.forEach((item) =>
+    //   setUserPreferences([
+    //     ...userPreferences,
+    //     { user_id: item.user_id, preference_id: item.id },
+    //   ]),
+    // )
+
+    // console.log(userPreferences)
 
     if (isAuthenticated && user) {
       const newUser: User = {
@@ -53,10 +73,10 @@ function Preferences() {
         last_name: user?.family_name,
         nickname: user?.nickname,
       }
-      if (currentUser !== null) addUser(newUser)
+
+      addUser(newUser)
     }
-    console.log(currentUser)
-  }, [currentUser, isAuthenticated, preferences, user])
+  }, [isAuthenticated, preferences, user, userBasedPreference])
 
   if (isLoading) {
     return <p>Retreiving your data</p>
@@ -103,16 +123,35 @@ function Preferences() {
           : 'bg-yellow-500',
     })
     updatePreferences(pref)
+    console.log(userPreferences)
   }
 
-  function handleSave() {
-    userPreferences.forEach((item) => {
-      addUserPreferences(item)
-    })
+  async function handleSave() {
+    if (userBasedPreference?.length !== 0) {
+      // Delete operation
+      await delUserPreferences(userId)
+        .then(() => {
+          console.log(userPreferences)
+          // After the delete operation is completed, execute the add operation
+          userPreferences.forEach((item) => {
+            addUserPreferences(item)
+          })
+        })
+        .catch((error) => {
+          // Handle error if the delete operation fails
+          console.error('Error deleting preferences:', error)
+        })
+    } else {
+      // If there are no preferences to delete, just execute the add operation
+      userPreferences.forEach((item) => {
+        addUserPreferences(item)
+      })
+    }
 
     navigate('/home/recipes')
   }
 
+  // preferences?.forEach((item) => updatePreferences(item))
   if (preferences) {
     const getTypes = () => {
       const arr = Array.from(new Set(preferences.map((item) => item.type)))
@@ -123,6 +162,7 @@ function Preferences() {
     return (
       <>
         <div className="mt-5">
+          <input placeholder="enter the ingredients"></input>
           <h2 className="ml-2 text-2xl">Preferences</h2>
           <ul className="ml-10">
             {typesArr.map((item) => (

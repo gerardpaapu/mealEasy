@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { getPreferences } from '../apis/backend-apis/preferences'
 import { getUserById } from '../apis/backend-apis/users'
-import { useAuth0 } from '@auth0/auth0-react'
+import { getUserPreferences } from '../apis/backend-apis/preferences'
 
 export default function usePreferencePage(id: string) {
   const {
@@ -19,5 +19,10 @@ export default function usePreferencePage(id: string) {
     queryFn: async () => await getPreferences(),
   })
 
-  return { currentUser, preferences, isLoading, isError }
+  const { data: userPreferences } = useQuery({
+    queryKey: ['userPreferences'],
+    queryFn: async () => await getUserPreferences(id),
+  })
+
+  return { currentUser, preferences, userPreferences, isLoading, isError }
 }

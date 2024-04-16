@@ -33,12 +33,11 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.delete('/delete', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
   try {
-    const userId = req.body.userId
-    const preferenceId = req.body.preferenceId
+    const userId = req.params.id
 
-    await db.delPreferences(userId, preferenceId)
+    await db.delPreferences(userId)
     res.status(200).send('preference deleted')
   } catch (e) {
     res.status(500).send(`Error: API call not working, ${e}`)

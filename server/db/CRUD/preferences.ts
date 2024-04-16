@@ -32,9 +32,6 @@ export async function getUserPreferences(
 export async function addUserPreferences(data: UserPreferences) {
   await db('user_preferences').insert(data)
 }
-export async function delPreferences(userId: string, preferenceId: number) {
-  await db('user_preferences')
-    .where('user_id', userId)
-    .where('preference_id', preferenceId)
-    .delete()
+export async function delPreferences(userId: string) {
+  await db('user_preferences').where('user_id', userId).delete()
 }
