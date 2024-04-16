@@ -17,7 +17,7 @@ function EditProfile() {
 
   const auth = user?.sub
   const updateUser = useUpdateUser()
-  const { data, isLoading, isError } = useGetUserById(auth)
+  const { data, isLoading, isError } = useGetUserById(auth!)
 
   const [profile, setProfile] = useState({
     nickname: '',
@@ -67,7 +67,7 @@ function EditProfile() {
             <div className="flex flex-col flex-wrap content-center">
               <h1 className=" mb-5 text-2xl">Edit Your Profile</h1>
               <form onSubmit={handleSubmit} className="flex flex-col">
-                <label htmlFor="nickname" className="mr-3">
+                <label className="mr-3">
                   Nickname:
                   <input
                     type="text"

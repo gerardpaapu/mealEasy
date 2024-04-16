@@ -4,9 +4,8 @@ import { User } from '../../../models/users'
 const rootUrl = '/api/v1'
 
 export async function getUserById(id: string) {
-  const user = await request.get(`${rootUrl}/users/${id}`)
-
-  return user.body as User
+  const res = await request.get(`${rootUrl}/users/${id}`)
+  return res.body as User
 }
 
 export async function addUser(data: User) {
