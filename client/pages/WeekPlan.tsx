@@ -8,7 +8,6 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { addUser } from '../apis/backend-apis/users'
 import useGetWeekById from '../hooks/useGetWeeks'
 import { getRecipeById } from '../apis/backend-apis/recipes'
-import { WeeksId } from '../../models/weeks'
 
 export default function WeekPlan() {
   const initialDaysOfWeek = [
@@ -23,8 +22,9 @@ export default function WeekPlan() {
 
   const [daysOfWeek, setDaysOfWeek] = useState(initialDaysOfWeek)
   const [mealPlan, setMealPlan] = useState({})
-  const [selectedRecipe, setSelectedRecipe] = useState(null)
+  const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(null)
   const [recipes, setRecipes] = useState([])
+  const [selectedRecipe, setSelectedRecipe] = useState(null)
   const { data: week } = useGetWeekById(2)
 
   useEffect(() => {
@@ -63,15 +63,8 @@ export default function WeekPlan() {
     getRecipes()
   }, [mealPlan])
 
-  const handleRecipeClick = () => {
-    setSelectedRecipe(
-      selectedRecipe === null ? (
-        <RecipeDetail
-          imageUrl="https://img.taste.com.au/3mYHXsD_/taste/2016/11/sushi-for-kids-81300-1.jpeg"
-          recipeName="Recipe Name"
-        />
-      ) : null,
-    )
+  const handleRecipeClick = (index) => {
+    setSelectedRecipeIndex(index)
   }
 
   const handleDragStart = (e, day) => {
@@ -139,25 +132,34 @@ export default function WeekPlan() {
                 <h2 className="mb-1 text-xl font-semibold text-headingGreen">
                   {day}
                 </h2>
+
                 <div
-                  className="card card-side h-24 w-96 bg-white shadow-xl"
+                  className="hover:po card card-side h-24 w-96 cursor-pointer bg-white shadow-sm hover:shadow-md hover:shadow-buttonGreen"
                   draggable
                   onDragStart={(e) => handleDragStart(e, day)}
                   onDrop={(e) => handleDrop(e, day)}
                   onDragOver={handleDragOver}
+                  onClick={() => handleRecipeClick(index)}
                 >
-                  <div className="p-2">
+                  <div className="m-auto flex">
                     <h2 className="card-title text-lg font-semibold">
                       {recipes[index]?.name || 'No Recipe'}
                     </h2>
-                    <button onClick={handleRecipeClick}>Recipe Detail</button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="ml-40">{selectedRecipe}</div>
+        <div className="ml-40 mt-12">
+          {selectedRecipeIndex !== null && (
+            <RecipeDetail
+              imageUrl={recipes[selectedRecipeIndex]?.image}
+              recipeName={recipes[selectedRecipeIndex]?.name}
+              ingredients={recipes[selectedRecipeIndex]?.ingredients.split('_')}
+            />
+          )}
+        </div>
       </div>
     </div>
   )

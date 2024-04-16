@@ -64,8 +64,10 @@ function EditProfile() {
       <>
         <IfAuthenticated>
           {user && (
-            <div className="flex flex-col flex-wrap content-center">
-              <h1 className=" mb-5 text-2xl">Edit Your Profile</h1>
+            <div className="relative flex flex-col items-center justify-center">
+              <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
+                Edit Your Profile
+              </h1>
               <form onSubmit={handleSubmit} className="flex flex-col">
                 <label htmlFor="nickname" className="mr-3">
                   Nickname:

@@ -59,33 +59,49 @@ function Profile() {
           Welcome {data.nickname}
         </h1>
         <div className="mt-5">
-          <h2 className="mb-5 ml-2 text-2xl">My Personal Details</h2>
-          <div className="ml-10">
-            <p className="mb-2">
-              <strong>Nickname:</strong> {data.nickname}
-            </p>
-            <p className="mb-2">
-              <strong>First name:</strong> {data.first_name}
-            </p>
-            <p className="mb-2">
-              <strong>Last name:</strong> {data.last_name}
-            </p>
-            <p className="mb-2">
-              <strong>Email:</strong> {data.email}
-            </p>
+          <h2 className="mb-5 ml-10 text-2xl font-semibold text-headingGreen">
+            My Personal Details
+          </h2>
+
+          <div className="mb-2 ml-20">
+            <div className="flex">
+              <p className="mb-2 text-headingGreen">
+                <strong>Nickname:</strong>
+              </p>
+              <p className="ml-3">{data.nickname}</p>
+            </div>
+            <div className="flex">
+              <p className="mb-2 text-headingGreen">
+                <strong>First name:</strong>
+              </p>
+              <p className="ml-3">{data.first_name}</p>
+            </div>
+            <div className="flex">
+              <p className="mb-2 text-headingGreen">
+                <strong>Last name:</strong>
+              </p>
+              <p className="ml-3">{data.last_name}</p>
+            </div>
+            <div className="flex">
+              <p className="mb-2 text-headingGreen">
+                <strong>Email:</strong>
+              </p>
+              <p className="ml-3">{data.email}</p>
+            </div>
           </div>
-          <Button>
-            {' '}
+          <Button className="ml-10">
             <Link to="edit">Edit Profile</Link>
           </Button>
           <LogoutButton>Log Out</LogoutButton>
         </div>
-        <div className="mt-5">
-          <h2 className="ml-2 text-2xl">Preferences</h2>
-          <ul className="ml-10">
+        <div className="mt-20">
+          <h2 className="ml-10 text-2xl font-semibold text-headingGreen">
+            Preferences
+          </h2>
+          <ul className="ml-20">
             {typesArr.map((item) => (
               <li key={item}>
-                <h3 className="mb-3 mt-5 text-xl">
+                <h3 className="mb-3 mt-5 text-xl font-semibold text-headingGreen">
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </h3>
                 <ul className="ml-5">
@@ -107,7 +123,7 @@ function Profile() {
             ))}
           </ul>
         </div>
-        <Button>
+        <Button className="ml-10 mt-5">
           <Link to="/home/preferences">Edit Preferences</Link>
         </Button>
       </div>
