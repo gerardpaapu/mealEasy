@@ -21,62 +21,12 @@ export default function WeekPlan() {
     'Sunday',
   ]
 
-  const meals = [
-    {
-      name: 'Butter Chicken',
-      about:
-        'A creamy and flavorful Indian dish made with tender chicken pieces.',
-    },
-    {
-      name: 'Pasta',
-      about: 'Delicious pasta served with your favorite sauce and toppings.',
-    },
-    {
-      name: 'Soup',
-      about: 'Comforting soup filled with fresh vegetables and aromatic herbs.',
-    },
-    {
-      name: 'Steak',
-      about:
-        'Juicy steak cooked to perfection and served with roasted vegetables.',
-    },
-    {
-      name: 'Salad',
-      about:
-        'Fresh salad made with crisp greens, colorful vegetables, and tangy dressing.',
-    },
-    {
-      name: 'Pizza',
-      about: 'Classic pizza with your choice of toppings, baked to perfection.',
-    },
-    {
-      name: 'Tacos',
-      about:
-        'Tasty tacos filled with seasoned meat, fresh salsa, and creamy guacamole.',
-    },
-  ]
-
   const [daysOfWeek, setDaysOfWeek] = useState(initialDaysOfWeek)
-  const [mealPlan, setMealPlan] = useState(
-    // initialDaysOfWeek.reduce((acc, day, index) => {
-    //   acc[day] = meals[index % meals.length].name // Assign a meal to each day from the meals array cyclically
-    //   return acc
-    // }, {}),
-    [Number],
-  )
-
+  const [mealPlan, setMealPlan] = useState({})
   const [selectedRecipe, setSelectedRecipe] = useState(null)
   const [recipes, setRecipes] = useState([])
   const { data: week } = useGetWeekById(2)
-  const [currentWeek, setCurrentWeek] = useState(
-    // initialDaysOfWeek.reduce((acc, day, index) => {
-    //   acc[day] = recipes[index % recipes.length].name // Assign a meal to each day from the meals array cyclically
-    //   return acc
-    // }, {}),
-    [],
-  )
 
-  console.log(week?.monday)
   useEffect(() => {
     if (week) {
       const arr = [
@@ -89,32 +39,29 @@ export default function WeekPlan() {
         week.sunday,
       ]
 
-      setMealPlan(arr)
+      setMealPlan(
+        arr.reduce((acc, meal, index) => {
+          acc[initialDaysOfWeek[index]] = meal
+          return acc
+        }, {}),
+      )
     }
   }, [week])
 
   useEffect(() => {
     const getRecipes = async () => {
       try {
-        const promises = mealPlan.map((item) => getRecipeById(item))
+        const promises = Object.values(mealPlan).map((item) =>
+          getRecipeById(item),
+        )
         const recipes = await Promise.all(promises)
         setRecipes(recipes)
-        setCurrentWeek(
-          initialDaysOfWeek.reduce((acc, day, index) => {
-            acc[day] = recipes[index % recipes.length].name // Assign a meal to each day from the meals array cyclically
-            return acc
-          }, {}),
-        )
       } catch (error) {
         console.error('Error fetching recipes')
       }
     }
     getRecipes()
   }, [mealPlan])
-
-  console.log('new recipes', recipes)
-  // const recipes = getRecipes()
-  // console.log(recipes)
 
   const handleRecipeClick = () => {
     setSelectedRecipe(
@@ -135,11 +82,10 @@ export default function WeekPlan() {
     e.preventDefault()
     const draggedDay = e.dataTransfer.getData('text/plain')
     if (draggedDay !== targetDay) {
-      const updatedMealPlan = {
-        ...mealPlan,
-        [targetDay]: mealPlan[draggedDay],
-        [draggedDay]: mealPlan[targetDay],
-      }
+      const updatedMealPlan = { ...mealPlan }
+      const temp = updatedMealPlan[targetDay]
+      updatedMealPlan[targetDay] = updatedMealPlan[draggedDay]
+      updatedMealPlan[draggedDay] = temp
       setMealPlan(updatedMealPlan)
     }
   }
@@ -148,30 +94,31 @@ export default function WeekPlan() {
     e.preventDefault()
   }
 
-  //---- Add user ---
+  // Add user
   const { user } = useAuth0()
   const auth = user?.sub
   const { data, isLoading, isError } = useGetUserById(auth)
-  console.log('users', data)
+
+  useEffect(() => {
+    if (!data && !isLoading && !isError) {
+      const newUser = {
+        auth0_id: user?.sub,
+        email: user?.email,
+        first_name: user?.given_name,
+        last_name: user?.family_name,
+        nickname: user?.nickname,
+      }
+      addUser(newUser)
+    }
+  }, [data, isError, isLoading, user])
+
   if (isLoading) {
     return <p>Waiting on user details...</p>
   }
   if (isError) {
-    return console.log('error with user')
+    console.error('Error with user')
+    return null // or handle error UI
   }
-  if (!data) {
-    const newUser: User = {
-      auth0_id: user?.sub,
-      email: user?.email,
-      first_name: user?.given_name,
-      last_name: user?.family_name,
-      nickname: user?.nickname,
-    }
-    addUser(newUser)
-  } else {
-    console.log('user already exsits')
-  }
-  //-------
 
   return (
     <div>
@@ -201,7 +148,7 @@ export default function WeekPlan() {
                 >
                   <div className="p-2">
                     <h2 className="card-title text-lg font-semibold">
-                      {currentWeek[day]}
+                      {recipes[index]?.name || 'No Recipe'}
                     </h2>
                     <button onClick={handleRecipeClick}>Recipe Detail</button>
                   </div>
