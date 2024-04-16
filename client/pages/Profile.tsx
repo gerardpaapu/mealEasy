@@ -59,11 +59,11 @@ function Profile() {
           Welcome {data.nickname}
         </h1>
         <div className="mt-5">
-          <h2 className="mb-5 ml-2 text-2xl text-headingGreen">
+          <h2 className="mb-5 ml-10 text-2xl text-headingGreen">
             My Personal Details
           </h2>
 
-          <div className="ml-10">
+          <div className="ml-20">
             <div className="flex">
               <p className="mb-2 text-headingGreen">
                 <strong>Nickname:</strong>
@@ -89,14 +89,14 @@ function Profile() {
               <p className="ml-3">{data.email}</p>
             </div>
           </div>
-          <Button>
+          <Button className="ml-10">
             <Link to="edit">Edit Profile</Link>
           </Button>
           <LogoutButton>Log Out</LogoutButton>
         </div>
         <div className="mt-5">
-          <h2 className="ml-2 text-2xl text-headingGreen">Preferences</h2>
-          <ul className="ml-10">
+          <h2 className="ml-10 text-2xl text-headingGreen">Preferences</h2>
+          <ul className="ml-20">
             {typesArr.map((item) => (
               <li key={item}>
                 <h3 className="mb-3 mt-5 text-xl text-headingGreen">
@@ -121,7 +121,7 @@ function Profile() {
             ))}
           </ul>
         </div>
-        <Button>
+        <Button className="ml-10">
           <Link to="/home/preferences">Edit Preferences</Link>
         </Button>
       </div>
