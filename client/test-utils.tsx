@@ -90,20 +90,40 @@ export function renderWithRouter(location = '/') {
   userEvent.setup()
   return render(<RouterProvider router={router} />)
 }
+// FIRST RENDER WITH QUERY FUNCTION
+// export function renderWithQuery(component: JSX.Element) {
+//   userEvent.setup()
+//   const queryClient = new QueryClient()
+
+//   return {
+//     user: userEvent,
+//     ...render(
+//       <QueryClientProvider client={queryClient}>
+//         <RouterProvider
+//           router={createMemoryRouter(
+//             createRoutesFromElements(<Route path="/" element={component} />),
+//           )}
+//         />
+//       </QueryClientProvider>,
+//     ),
+//   }
+// }
 
 export function renderWithQuery(component: JSX.Element) {
-  userEvent.setup()
-  const queryClient = new QueryClient()
+  const router = createMemoryRouter(
+    createRoutesFromElements(<Route path="/" element={component} />),
+    {
+      initialEntries: ['/'],
+    },
+  )
 
+  const user = userEvent.setup()
+  const queryClient = new QueryClient()
   return {
-    user: userEvent,
+    user,
     ...render(
       <QueryClientProvider client={queryClient}>
-        <RouterProvider
-          router={createMemoryRouter(
-            createRoutesFromElements(<Route path="/" element={component} />),
-          )}
-        />
+        <RouterProvider router={router} />
       </QueryClientProvider>,
     ),
   }
