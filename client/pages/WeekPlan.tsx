@@ -132,27 +132,26 @@ export default function WeekPlan() {
                 <h2 className="mb-1 text-xl font-semibold text-headingGreen">
                   {day}
                 </h2>
+
                 <div
-                  className="card card-side h-24 w-96 bg-white shadow-xl"
+                  className="hover:po card card-side h-24 w-96 cursor-pointer bg-white shadow-sm hover:shadow-md hover:shadow-buttonGreen"
                   draggable
                   onDragStart={(e) => handleDragStart(e, day)}
                   onDrop={(e) => handleDrop(e, day)}
                   onDragOver={handleDragOver}
+                  onClick={() => handleRecipeClick(index)}
                 >
-                  <div className="p-2">
+                  <div className="m-auto flex">
                     <h2 className="card-title text-lg font-semibold">
                       {recipes[index]?.name || 'No Recipe'}
                     </h2>
-                    <button onClick={() => handleRecipeClick(index)}>
-                      Recipe Detail
-                    </button>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="ml-40">
+        <div className="ml-40 mt-12">
           {selectedRecipeIndex !== null && (
             <RecipeDetail
               imageUrl={recipes[selectedRecipeIndex]?.image}

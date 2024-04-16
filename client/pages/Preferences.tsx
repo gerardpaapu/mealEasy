@@ -39,7 +39,8 @@ function Preferences() {
     if (preferences) {
       const state: BtnColor = {}
       preferences.forEach((item) => {
-        state[item.name] = 'bg-yellow-500'
+        state[item.name] =
+          'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-40 shadow-none hover:bg-transparent'
       })
       setBtnColor(state)
     }
@@ -66,14 +67,17 @@ function Preferences() {
   }
 
   function updatePreferences(pref: Preferencetype) {
-    if (btncolor[pref.name] === 'bg-yellow-500') {
+    if (
+      btncolor[pref.name] ===
+      'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-40 shadow-none hover:bg-transparent'
+    ) {
       setUserPreferences([
         ...userPreferences,
         { user_id: user?.sub, preference_id: pref.id },
       ])
     }
 
-    if (btncolor[pref.name] === 'bg-green-600') {
+    if (btncolor[pref.name] === 'shadow-lg btn btn-primary text-lightGreen') {
       const arr = userPreferences.filter(
         (item) => item.preference_id !== pref.id,
       )
@@ -85,9 +89,10 @@ function Preferences() {
     setBtnColor({
       ...btncolor,
       [pref.name]:
-        btncolor[pref.name] === 'bg-yellow-500'
-          ? 'bg-green-600'
-          : 'bg-yellow-500',
+        btncolor[pref.name] ===
+        'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-40 shadow-none hover:bg-transparent'
+          ? 'shadow-lg btn btn-primary text-lightGreen'
+          : 'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-40 shadow-none hover:bg-transparent',
     })
     updatePreferences(pref)
   }
@@ -132,37 +137,39 @@ function Preferences() {
               Preferences
             </h1>
 
-            <Button onClick={handleSave} className="w-24">
+            <Button onClick={handleSave} className="w-40">
               Save
             </Button>
           </div>
 
-          <ul className="ml-10">
-            {typesArr.map((item) => (
-              <li key={item}>
-                <h3 className="mb-3 mt-5 text-xl text-headingGreen">
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
-                </h3>
-                <div className="container max-w-md">
-                  <ul className="ml-5 grid grid-cols-3 gap-4">
-                    {preferences.map((pref) =>
-                      pref.type === item ? (
-                        <li key={pref.name} className="mb-2">
-                          <button
-                            onClick={() => handleClick(pref)}
-                            className={`w-full rounded-lg border-none ${btncolor[pref.name]} px-4 py-1 font-bold`}
-                          >
-                            {pref.name.charAt(0).toUpperCase() +
-                              pref.name.slice(1)}
-                          </button>
-                        </li>
-                      ) : null,
-                    )}
-                  </ul>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div>
+            <ul className="ml-10">
+              {typesArr.map((item) => (
+                <li key={item}>
+                  <h3 className="mb-5 mt-8 text-xl font-semibold text-headingGreen">
+                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                  </h3>
+                  <div className="container max-w-md">
+                    <ul className="ml-5 grid grid-cols-3 gap-10">
+                      {preferences.map((pref) =>
+                        pref.type === item ? (
+                          <li key={pref.name}>
+                            <button
+                              onClick={() => handleClick(pref)}
+                              className={` ${btncolor[pref.name]} w-36`}
+                            >
+                              {pref.name.charAt(0).toUpperCase() +
+                                pref.name.slice(1)}
+                            </button>
+                          </li>
+                        ) : null,
+                      )}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </>
     )

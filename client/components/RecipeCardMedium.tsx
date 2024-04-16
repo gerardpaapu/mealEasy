@@ -195,7 +195,7 @@ export default function RecipeCardMedium({ input, setInput }) {
             </Button>
           </div>
 
-          <div className="flex flex-wrap justify-start">
+          <div className="flex flex-wrap justify-center">
             {meals.map((meal, index) => (
               <div key={index} className="m-4 w-96">
                 <div
@@ -234,11 +234,11 @@ export default function RecipeCardMedium({ input, setInput }) {
               </div>
             ))}
           </div>
-          {isSelectionFull && (
+          {/* {isSelectionFull && (
             <div className="fixed left-0 top-0 w-full bg-red-500 py-2 text-center text-white opacity-90">
               You have selected seven meals. You cannot select more.
             </div>
-          )}
+          )} */}
           {selectedRecipeIndex !== null && (
             <div
               className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-65"
