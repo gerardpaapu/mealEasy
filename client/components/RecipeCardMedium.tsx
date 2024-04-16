@@ -62,6 +62,7 @@ export default function RecipeCardMedium() {
     )
 
     setMeals(filteredMeals)
+    setInput('')
   }
 
   function handleClear() {
@@ -184,6 +185,7 @@ export default function RecipeCardMedium() {
               viewBox="0 0 16 16"
               fill="currentColor"
               className="h-4 w-4 opacity-70"
+              onClick={() => handleFilter()}
             >
               <path
                 fillRule="evenodd"
