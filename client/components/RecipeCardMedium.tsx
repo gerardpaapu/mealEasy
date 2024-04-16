@@ -24,7 +24,7 @@ export default function RecipeCardMedium() {
     .join('')
 
   const string = searchString ?? '-1'
-
+  console.log(string)
   const { data, isLoading, isError } = useGetApiRecipes(string)
 
   const navigate = useNavigate()

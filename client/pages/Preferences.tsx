@@ -1,12 +1,15 @@
 import { useAuth0 } from '@auth0/auth0-react'
 import { addUser } from '../apis/backend-apis/users'
 import { User } from '../../models/users'
-import useGetPreferences from '../hooks/useGetPreferences'
+
 import { useEffect, useState } from 'react'
 import { Preferences as Preferencetype } from '../../models/preferences'
 import { UserPreferences } from '../../models/userPreferences'
-import useGetUserById from '../hooks/useGetUserById'
-import { addUserPreferences } from '../apis/backend-apis/preferences'
+
+import {
+  addUserPreferences,
+  delUserPreferences,
+} from '../apis/backend-apis/preferences'
 import { useNavigate } from 'react-router-dom'
 import usePreferencePage from '../hooks/usePreferencePage'
 import Button from '../components/Button'
@@ -23,19 +26,13 @@ function Preferences() {
 
   const auth = user?.sub
   const userId = auth ?? '-1'
-  const { currentUser, preferences, isLoading, isError } =
-    usePreferencePage(userId)
-
-  // const { data: preferences, isLoading, isError } = useGetPreferences()
-  // const { data: currentUser } = useGetUserById(userId)
-
-  // const newUser: User = {
-  //   auth0_id: user?.sub,
-  //   email: user?.email,
-  //   first_name: user?.given_name,
-  //   last_name: user?.family_name,
-  //   nickname: user?.nickname,
-  // }
+  const {
+    currentUser,
+    preferences,
+    userPreferences: userBasedPreference,
+    isLoading,
+    isError,
+  } = usePreferencePage(userId)
 
   useEffect(() => {
     if (preferences) {
@@ -54,7 +51,7 @@ function Preferences() {
         last_name: user?.family_name,
         nickname: user?.nickname,
       }
-      if (currentUser !== null) addUser(newUser)
+      addUser(newUser)
     }
     console.log(currentUser)
   }, [currentUser, isAuthenticated, preferences, user])
@@ -66,18 +63,6 @@ function Preferences() {
   if (isError) {
     return <p>There was an error retrieving your profile</p>
   }
-
-  // if (isAuthenticated && user) {
-  //   const newUser: User = {
-  //     auth0_id: user?.sub,
-  //     email: user?.email,
-  //     first_name: user?.given_name,
-  //     last_name: user?.family_name,
-  //     nickname: user?.nickname,
-  //   }
-  //   if (currentUser !== null) addUser(newUser)
-  // }
-  // console.log(currentUser)
 
   function updatePreferences(pref: Preferencetype) {
     if (btncolor[pref.name] === 'bg-yellow-500') {
@@ -107,11 +92,26 @@ function Preferences() {
   }
 
   function handleSave() {
-    userPreferences.forEach((item) => {
-      addUserPreferences(item)
-    })
-
-    navigate('/home/recipes')
+    if (userBasedPreference?.length !== 0) {
+      // Delete operation
+      delUserPreferences(userId)
+        .then(() => {
+          // After the delete operation is completed, execute the add operation
+          userPreferences.forEach((item) => {
+            addUserPreferences(item)
+          })
+        })
+        .catch((error) => {
+          // Handle error if the delete operation fails
+          console.error('Error deleting preferences:', error)
+        })
+    } else {
+      // If there are no preferences to delete, just execute the add operation
+      userPreferences.forEach((item) => {
+        addUserPreferences(item)
+      })
+    }
+    setTimeout(() => navigate('/home/recipes'), 1500)
   }
 
   if (preferences) {
