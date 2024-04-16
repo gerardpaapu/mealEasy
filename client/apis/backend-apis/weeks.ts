@@ -1,15 +1,15 @@
 import request from 'superagent'
 
-import { UpdateWeek, Weeks, WeeksId } from '../../../models/weeks'
+import { UpdateWeek, Weeks } from '../../../models/weeks'
 
 const rootUrl = '/api/v1'
 
-export async function getWeeksByUserId(userid: Weeks) {
+export async function getWeeksByUserId(userid: string) {
   const weeks = await request.get(`${rootUrl}/weeks/user/${userid}`)
   return weeks.body as Weeks
 }
 
-export async function getWeeksById(id: WeeksId) {
+export async function getWeeksById(id: number) {
   const week = await request.get(`${rootUrl}/weeks/${id}`)
   return week.body as Weeks
 }

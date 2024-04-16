@@ -8,22 +8,34 @@ import { UserPreferences } from '../../models/userPreferences'
 import useGetUserById from '../hooks/useGetUserById'
 import { addUserPreferences } from '../apis/backend-apis/preferences'
 import { useNavigate } from 'react-router-dom'
+import usePreferencePage from '../hooks/usePreferencePage'
+import Button from '../components/Button'
 
 interface BtnColor {
   [key: string]: string
 }
 
 function Preferences() {
-  const { user, isAuthenticated } = useAuth0()
-  const { data: preferences, isLoading, isError } = useGetPreferences()
   const [btncolor, setBtnColor] = useState<BtnColor>({})
   const [userPreferences, setUserPreferences] = useState<UserPreferences[]>([])
+  const { user, isAuthenticated } = useAuth0()
   const navigate = useNavigate()
 
   const auth = user?.sub
   const userId = auth ?? '-1'
+  const { currentUser, preferences, isLoading, isError } =
+    usePreferencePage(userId)
 
-  const { data: currentUser } = useGetUserById(userId)
+  // const { data: preferences, isLoading, isError } = useGetPreferences()
+  // const { data: currentUser } = useGetUserById(userId)
+
+  // const newUser: User = {
+  //   auth0_id: user?.sub,
+  //   email: user?.email,
+  //   first_name: user?.given_name,
+  //   last_name: user?.family_name,
+  //   nickname: user?.nickname,
+  // }
 
   useEffect(() => {
     if (preferences) {
@@ -33,7 +45,19 @@ function Preferences() {
       })
       setBtnColor(state)
     }
-  }, [preferences])
+
+    if (isAuthenticated && user) {
+      const newUser: User = {
+        auth0_id: user?.sub,
+        email: user?.email,
+        first_name: user?.given_name,
+        last_name: user?.family_name,
+        nickname: user?.nickname,
+      }
+      if (currentUser !== null) addUser(newUser)
+    }
+    console.log(currentUser)
+  }, [currentUser, isAuthenticated, preferences, user])
 
   if (isLoading) {
     return <p>Retreiving your data</p>
@@ -43,17 +67,17 @@ function Preferences() {
     return <p>There was an error retrieving your profile</p>
   }
 
-  if (isAuthenticated && user) {
-    const newUser: User = {
-      auth0_id: user?.sub,
-      email: user?.email,
-      first_name: user?.given_name,
-      last_name: user?.family_name,
-      nickname: user?.nickname,
-    }
-
-    addUser(newUser)
-  }
+  // if (isAuthenticated && user) {
+  //   const newUser: User = {
+  //     auth0_id: user?.sub,
+  //     email: user?.email,
+  //     first_name: user?.given_name,
+  //     last_name: user?.family_name,
+  //     nickname: user?.nickname,
+  //   }
+  //   if (currentUser !== null) addUser(newUser)
+  // }
+  // console.log(currentUser)
 
   function updatePreferences(pref: Preferencetype) {
     if (btncolor[pref.name] === 'bg-yellow-500') {
@@ -100,11 +124,22 @@ function Preferences() {
     return (
       <>
         <div className="mt-5">
-          <h2 className="ml-2 text-2xl">Preferences</h2>
+          {/* relative flex flex-col items-center justify-center */}
+          {/* flex justify-center text-4xl */}
+          <div className="relative flex flex-col items-center justify-center ">
+            <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
+              Preferences
+            </h1>
+
+            <Button onClick={handleSave} className="w-24">
+              Save
+            </Button>
+          </div>
+
           <ul className="ml-10">
             {typesArr.map((item) => (
               <li key={item}>
-                <h3 className="mb-3 mt-5 text-xl">
+                <h3 className="mb-3 mt-5 text-xl text-headingGreen">
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </h3>
                 <div className="container max-w-md">
@@ -128,12 +163,6 @@ function Preferences() {
             ))}
           </ul>
         </div>
-        <button
-          onClick={handleSave}
-          className="fixed right-20 top-20 rounded-lg border-none bg-green-600 px-4 py-1 font-bold"
-        >
-          Save
-        </button>
       </>
     )
   }

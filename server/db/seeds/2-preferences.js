@@ -3,70 +3,66 @@ export async function seed(knex) {
   await knex('preferences').insert([
     {
       id: 1,
-      name: 'balanced',
-      type: 'diet',
-    },
-    {
-      id: 2,
+
       name: 'high-protein',
       type: 'diet',
     },
     {
-      id: 3,
+      id: 2,
       name: 'low-carb',
       type: 'diet',
     },
     {
-      id: 4,
+      id: 3,
       name: 'low-fat',
       type: 'diet',
     },
 
     {
-      id: 5,
+      id: 4,
       name: 'vegan',
       type: 'health',
     },
     {
-      id: 6,
+      id: 5,
       name: 'vegetarian',
       type: 'health',
     },
     {
-      id: 7,
+      id: 6,
       name: 'low-sugar',
       type: 'health',
     },
     {
-      id: 8,
-      name: 'mediterranean',
+      id: 7,
+      name: 'Mediterranean',
       type: 'health',
     },
     {
-      id: 9,
+      id: 8,
       name: 'dairy-free',
       type: 'health',
     },
     {
-      id: 10,
+      id: 9,
       name: 'paleo',
       type: 'health',
     },
     {
-      id: 11,
+      id: 10,
       name: 'peanut-free',
       type: 'health',
     },
-    { id: 12, name: 'American', type: 'cuisineType' },
+    { id: 11, name: 'American', type: 'cuisineType' },
 
-    { id: 13, name: 'Asian', type: 'cuisineType' },
-    { id: 14, name: 'Indian', type: 'cuisineType' },
+    { id: 12, name: 'Asian', type: 'cuisineType' },
+    { id: 13, name: 'Indian', type: 'cuisineType' },
     {
-      id: 15,
+      id: 14,
       name: 'Chinese',
       type: 'cuisineType',
     },
-    { id: 16, name: 'French', type: 'cuisineType' },
-    { id: 17, name: 'Italian', type: 'cuisineType' },
+    { id: 15, name: 'French', type: 'cuisineType' },
+    { id: 16, name: 'Italian', type: 'cuisineType' },
   ])
 }

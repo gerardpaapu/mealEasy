@@ -1,3 +1,4 @@
+import React from 'react'
 import { useAuth0 } from '@auth0/auth0-react'
 import Button from './Button'
 
@@ -14,7 +15,7 @@ function Signup() {
   }
 
   return (
-    <Button onClick={handleLogin} className="bg-white">
+    <Button onClick={handleLogin} className=" w-40">
       Sign Up
     </Button>
   )

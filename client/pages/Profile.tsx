@@ -3,27 +3,22 @@ import { Link } from 'react-router-dom'
 import useGetUserById from '../hooks/useGetUserById'
 import LogoutButton from '../components/Logout'
 import Button from '../components/Button'
+import useGetUserPreference from '../hooks/useGetUserPreferences'
 
-const preferences = [
-  {
-    name: 'balanced',
-    type: 'diet',
-  },
-  {
-    name: 'no-nuts',
-    type: 'allergies',
-  },
-  {
-    name: 'low-carb',
-    type: 'diet',
-  },
-]
-
-const getTypes = () => {
-  const arr = Array.from(new Set(preferences.map((item) => item.type)))
-  return arr
-}
-const typesArr = getTypes()
+// const preferences = [
+//   {
+//     name: 'balanced',
+//     type: 'diet',
+//   },
+//   {
+//     name: 'no-nuts',
+//     type: 'allergies',
+//   },
+//   {
+//     name: 'low-carb',
+//     type: 'diet',
+//   },
+// ]
 
 function Profile() {
   const { user } = useAuth0()
@@ -32,6 +27,22 @@ function Profile() {
   const userId = auth ?? '-1'
 
   const { data, isLoading, isError } = useGetUserById(userId)
+  const { data: preferences } = useGetUserPreference(userId)
+
+  const getTypes = () => {
+    const arr = Array.from(new Set(preferences?.map((item) => item.type)))
+    return arr
+  }
+
+  const typesArr = getTypes()
+
+  // const getNames = () => {
+  //   const arr = Array.from(new Set(preferences?.map((item) => item.name)))
+  //   return arr
+  // }
+  // const namesArr = getNames()
+
+  // console.log(namesArr)
 
   if (isLoading) {
     return <p>is Loading ...</p>
@@ -44,7 +55,7 @@ function Profile() {
   if (data)
     return (
       <div>
-        <h1 className="text-headingGreen mb-14 flex justify-center text-4xl">
+        <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
           Welcome {data.nickname}
         </h1>
         <div className="mt-5">
@@ -78,13 +89,19 @@ function Profile() {
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </h3>
                 <ul className="ml-5">
-                  {preferences.map((pref) =>
-                    pref.type === item ? (
-                      <li key={pref.name} className="mb-2">
-                        {pref.name.charAt(0).toUpperCase() + pref.name.slice(1)}
-                      </li>
-                    ) : null,
-                  )}
+                  {preferences
+                    ?.filter(
+                      (pref, index, self) =>
+                        index === self.findIndex((p) => p.name === pref.name),
+                    )
+                    .map((pref) =>
+                      pref.type === item ? (
+                        <li key={pref.name} className="mb-2">
+                          {pref.name.charAt(0).toUpperCase() +
+                            pref.name.slice(1)}
+                        </li>
+                      ) : null,
+                    )}
                 </ul>
               </li>
             ))}
