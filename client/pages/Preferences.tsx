@@ -8,6 +8,7 @@ import { UserPreferences } from '../../models/userPreferences'
 import useGetUserById from '../hooks/useGetUserById'
 import { addUserPreferences } from '../apis/backend-apis/preferences'
 import { useNavigate } from 'react-router-dom'
+import Button from '../components/Button'
 
 interface BtnColor {
   [key: string]: string
@@ -103,12 +104,12 @@ function Preferences() {
           <div className="flex justify-center text-4xl">
             <h2 className="text-headingGreen">Pick Your Meals</h2>
 
-            <button
+            <Button
               onClick={handleSave}
               className="fixed right-20 top-20 rounded-lg border-none bg-green-600 px-4 py-1 font-bold"
             >
               Save
-            </button>
+            </Button>
           </div>
 
           <ul className="ml-10">
