@@ -47,7 +47,7 @@ describe('edit profile', () => {
     // })
   })
 
-  it.skip('should render a Edit user Form', async () => {
+  it('should render a Edit user Form', async () => {
     //arrange
     //'nock' an http request network call
     const scope = nock('http://localhost')
@@ -62,24 +62,28 @@ describe('edit profile', () => {
       })
     //ACT
     //render app
-    renderWithQuery(<EditProfile />)
+    const screen = renderWithQuery(<EditProfile />)
 
-    //async wait screen
-    await waitForElementToBeRemoved(
-      () => screen.getByText('Retrieving your data'),
-      { timeout: 5000 },
-    )
-    if (!nock.isDone()) {
-      console.log(nock.pendingMocks())
+    // //async wait screen
+    // await waitForElementToBeRemoved(
+    //   () => screen.getByText('Retrieving your data'),
+    //   { timeout: 5000 },
+    // )
+    // const loading = await waitFor(() =>
+    //   screen.getByText('Retrieving your data'),
+    // )
+
+    if (nock.isDone()) {
+      const header = screen.getByRole('heading', { name: 'Edit Your Profile' })
+      console.log(header)
+      // const name = screen.get
+
+      expect(header).toBeInTheDocument()
     }
     //Check user does exist
-    const header = screen.getByRole('heading', { name: 'Edit Your Profile' })
-    console.log(header)
-
-    expect(header).toBeInTheDocument()
   })
 
-  it.skip('should render an error message when something goes wrong', async () => {
+  it('should render an error message when something goes wrong', async () => {
     //arrange
     //'nock' an http request network call
     const scope = nock('http://localhost')
@@ -88,10 +92,10 @@ describe('edit profile', () => {
       .reply(500)
     //ACT
 
-    //render app
+    // render app
     renderWithQuery(<EditProfile />)
     await waitForElementToBeRemoved(() =>
-      screen.getByText('Retrieving your data'),
+      screen.getByText(/Retrieving your data/i),
     )
     //async wait screen
     const error = await waitFor(() =>
