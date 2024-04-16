@@ -188,12 +188,12 @@ export default function WeekPlan() {
         <div>
           <div className="ml-12 flex flex-col items-start">
             {daysOfWeek.map((day, index) => (
-              <div key={index} className="h-32">
+              <div key={index} className="mt-5 h-32">
                 <h2 className="mb-1 text-xl font-semibold text-headingGreen">
                   {day}
                 </h2>
                 <div
-                  className="card card-side h-20 w-80 bg-white shadow-xl"
+                  className="card card-side h-24 w-96 bg-white shadow-xl"
                   draggable
                   onDragStart={(e) => handleDragStart(e, day)}
                   onDrop={(e) => handleDrop(e, day)}
