@@ -4,7 +4,6 @@ import { describe, it, expect } from 'vitest'
 import Login from './Login'
 
 import { renderComponent } from '../test-utils'
-import { fireEvent } from '@testing-library/react'
 
 describe('Login Button', () => {
   it('should render a log in button', async () => {
