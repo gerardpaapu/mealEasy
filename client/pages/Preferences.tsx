@@ -166,9 +166,11 @@ function Preferences() {
               ))}
             </ul>
           </div>
-          <Button onClick={handleSave} className="ml-34 mt-10 w-40">
-            Save
-          </Button>
+          <div className="ml-28 w-2/5">
+            <Button onClick={handleSave} className="ml-24 mt-10 w-40">
+              Save
+            </Button>
+          </div>
         </div>
       </>
     )
