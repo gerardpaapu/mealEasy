@@ -118,7 +118,14 @@ export function renderWithQuery(component: JSX.Element) {
   )
 
   const user = userEvent.setup()
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      // NOTE: if we don't set this, then react-query will
+      // retry requests during tests which may hide errors
+      // when the test times out
+      queries: { retry: false },
+    },
+  })
   return {
     user,
     ...render(
