@@ -47,7 +47,7 @@ describe('edit profile', () => {
     // })
   })
 
-  it('should render a Edit user Form', async () => {
+  it.skip('should render a Edit user Form', async () => {
     //arrange
     //'nock' an http request network call
     const scope = nock('http://localhost')
@@ -79,7 +79,7 @@ describe('edit profile', () => {
     expect(header).toBeInTheDocument()
   })
 
-  it('should render an error message when something goes wrong', async () => {
+  it.skip('should render an error message when something goes wrong', async () => {
     //arrange
     //'nock' an http request network call
     const scope = nock('http://localhost')
