@@ -141,7 +141,7 @@ export default function WeekPlan() {
     <div>
       <div className="dropdown relative">
         <div onClick={toggleDropdown}>
-          <button className="hover:bg-buttonGreen btn bg-transparent focus:text-white">
+          <button className="hover:bg-buttonGreen text-buttonGreen btn bg-transparent focus:text-white">
             Select your week
           </button>
         </div>
