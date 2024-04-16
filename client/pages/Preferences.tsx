@@ -9,6 +9,7 @@ import useGetUserById from '../hooks/useGetUserById'
 import { addUserPreferences } from '../apis/backend-apis/preferences'
 import { useNavigate } from 'react-router-dom'
 import usePreferencePage from '../hooks/usePreferencePage'
+import Button from '../components/Button'
 
 interface BtnColor {
   [key: string]: string
@@ -123,13 +124,14 @@ function Preferences() {
     return (
       <>
         <div className="mt-5">
-          <div className="flex justify-center text-4xl">
-            <h2 className="text-headingGreen">Pick Your Meals</h2>
+          {/* relative flex flex-col items-center justify-center */}
+          {/* flex justify-center text-4xl */}
+          <div className="relative flex flex-col items-center justify-center ">
+            <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
+              Preferences
+            </h1>
 
-            <Button
-              onClick={handleSave}
-              className="fixed right-20 top-20 rounded-lg border-none bg-green-600 px-4 py-1 font-bold"
-            >
+            <Button onClick={handleSave} className="w-24">
               Save
             </Button>
           </div>
@@ -137,7 +139,7 @@ function Preferences() {
           <ul className="ml-10">
             {typesArr.map((item) => (
               <li key={item}>
-                <h3 className="mb-3 mt-5 text-xl">
+                <h3 className="mb-3 mt-5 text-xl text-headingGreen">
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </h3>
                 <div className="container max-w-md">
