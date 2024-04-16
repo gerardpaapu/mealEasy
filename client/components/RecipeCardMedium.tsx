@@ -196,12 +196,12 @@ export default function RecipeCardMedium() {
           </label>
           <div className="flex flex-col md:flex-row md:items-start md:justify-start">
             {/* Filter button  */}
-            <Button
+            {/* <Button
               className="mb-12 md:mb-0 md:mr-4"
               onClick={() => handleFilter()}
             >
               Filter
-            </Button>
+            </Button> */}
             {/* clear button */}
             <Button
               className="mb-12 md:mb-0 md:mr-4"
