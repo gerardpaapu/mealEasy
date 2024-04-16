@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { addUser } from '../apis/backend-apis/users'
 import { User } from '../../models/users'
 
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import { Preferences as Preferencetype } from '../../models/preferences'
 import { UserPreferences } from '../../models/userPreferences'
 
@@ -21,6 +21,7 @@ interface BtnColor {
 function Preferences() {
   const [btncolor, setBtnColor] = useState<BtnColor>({})
   const [userPreferences, setUserPreferences] = useState<UserPreferences[]>([])
+
   const { user, isAuthenticated } = useAuth0()
   const navigate = useNavigate()
 
