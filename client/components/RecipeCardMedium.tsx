@@ -88,6 +88,7 @@ export default function RecipeCardMedium() {
       const obj = {}
       obj.name = item.recipe.label
       obj.image = item.recipe.images
+
       obj.ingredients = item.recipe.ingredientLines
       return obj
     })
@@ -136,9 +137,9 @@ export default function RecipeCardMedium() {
                 <div
                   className={`card card-compact relative h-64 cursor-pointer ${
                     isMealSelected(index)
-                      ? 'border-buttonGreen border-2 '
+                      ? 'border-2 border-buttonGreen '
                       : 'border-transparent'
-                  } hover:shadow-buttonGreen bg-white shadow-sm hover:shadow-md ${isSelectionFull && !isMealSelected(index) ? 'opacity-50 hover:shadow-transparent' : ''}`}
+                  } bg-white shadow-sm hover:shadow-md hover:shadow-buttonGreen ${isSelectionFull && !isMealSelected(index) ? 'opacity-50 hover:shadow-transparent' : ''}`}
                 >
                   <figure onClick={() => handleShowRecipeDetail(index)}>
                     <img
