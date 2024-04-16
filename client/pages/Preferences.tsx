@@ -145,17 +145,17 @@ function Preferences() {
             <ul className="ml-10">
               {typesArr.map((item) => (
                 <li key={item}>
-                  <h3 className="mb-3 mt-5 text-xl text-headingGreen">
+                  <h3 className="mb-5 mt-8 text-xl font-semibold text-headingGreen">
                     {item.charAt(0).toUpperCase() + item.slice(1)}
                   </h3>
                   <div className="container max-w-md">
-                    <ul className="ml-5 grid grid-cols-3 gap-14">
+                    <ul className="ml-5 grid grid-cols-3 gap-10">
                       {preferences.map((pref) =>
                         pref.type === item ? (
                           <li key={pref.name}>
                             <button
                               onClick={() => handleClick(pref)}
-                              className={` ${btncolor[pref.name]} w-40`}
+                              className={` ${btncolor[pref.name]} w-36`}
                             >
                               {pref.name.charAt(0).toUpperCase() +
                                 pref.name.slice(1)}
