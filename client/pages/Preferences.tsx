@@ -136,10 +136,6 @@ function Preferences() {
             <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
               Preferences
             </h1>
-
-            <Button onClick={handleSave} className="w-40">
-              Save
-            </Button>
           </div>
 
           <div>
@@ -169,6 +165,11 @@ function Preferences() {
                 </li>
               ))}
             </ul>
+          </div>
+          <div className="ml-28 w-2/5">
+            <Button onClick={handleSave} className="ml-24 mt-10 w-40">
+              Save
+            </Button>
           </div>
         </div>
       </>
