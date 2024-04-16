@@ -4,9 +4,9 @@ import { RecipeId, Recipes } from '../../../models/recipes'
 
 const rootUrl = '/api/v1'
 
-export async function getRecipeById(id: RecipeId) {
+export async function getRecipeById(id: number) {
   const recipe = await request.get(`${rootUrl}/recipes/${id}`)
-  console.log('getbyRecipeid', recipe.body)
+
   return recipe.body as RecipeId
 }
 
