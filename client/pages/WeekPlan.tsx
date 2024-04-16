@@ -141,7 +141,7 @@ export default function WeekPlan() {
     <div>
       <div className="dropdown relative">
         <div onClick={toggleDropdown}>
-          <button className="hover:bg-buttonGreen btn bg-transparent">
+          <button className="hover:bg-buttonGreen btn bg-transparent focus:text-white">
             Select your week
           </button>
         </div>
@@ -157,6 +157,7 @@ export default function WeekPlan() {
               >
                 <button
                   onClick={() => renderRecipe(week)}
+                  className="focus:text-white"
                 >{`Week ${week}`}</button>
               </li>
             ))}
