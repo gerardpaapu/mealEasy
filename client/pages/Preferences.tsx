@@ -152,7 +152,7 @@ function Preferences() {
                           <li key={pref.name}>
                             <button
                               onClick={() => handleClick(pref)}
-                              className={` ${btncolor[pref.name]} w-36`}
+                              className={` ${btncolor[pref.name]} w-32`}
                             >
                               {pref.name.charAt(0).toUpperCase() +
                                 pref.name.slice(1)}
