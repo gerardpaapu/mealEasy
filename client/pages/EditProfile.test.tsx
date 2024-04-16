@@ -34,7 +34,6 @@ describe('edit profile', () => {
     //render app
     renderWithQuery(<EditProfile />)
 
-    console.log(screen)
     //async wait screen
     const loading = await waitFor(() =>
       screen.getByText('Retrieving your data'),
@@ -67,7 +66,6 @@ describe('edit profile', () => {
     //Check user does exist
     if (nock.isDone()) {
       const header = screen.getByRole('heading', { name: 'Edit Your Profile' })
-      console.log(header)
 
       expect(header).toBeInTheDocument()
     }
