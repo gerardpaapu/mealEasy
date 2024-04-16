@@ -5,7 +5,7 @@ import server from '../server'
 
 vi.mock('../db/CRUD/user')
 
-describe('GET /apo/v1/user', () => {
+describe('GET /api/v1/user', () => {
   it('should return 200 with an object', async () => {
     const fakeUser = {
       auth0_id: 'auth0|648fd1c873375442becf2c60',
