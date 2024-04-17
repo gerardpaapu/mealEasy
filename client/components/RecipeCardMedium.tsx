@@ -166,7 +166,7 @@ export default function RecipeCardMedium() {
     return (
       <>
         <div className="relative flex flex-col items-center justify-center">
-          <div className="flex justify-center text-4xl">
+          <div className="mb-5 flex justify-center text-5xl">
             <h2 className="text-headingGreen">Pick Your Meals</h2>
           </div>
           <div className="mb-10 mt-2 flex justify-center">
@@ -262,11 +262,11 @@ export default function RecipeCardMedium() {
           >
             More Recipes
           </Button>
-          {/* {isSelectionFull && (
-            <div className="fixed left-0 top-0 w-full bg-red-500 py-2 text-center text-white opacity-90">
+          {isSelectionFull && (
+            <div className="bg-buttonGreen fixed left-0 top-0 w-full py-2 text-center text-white opacity-90">
               You have selected seven meals. You cannot select more.
             </div>
-          )} */}
+          )}
           {selectedRecipeIndex !== null && (
             <div
               className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-65"

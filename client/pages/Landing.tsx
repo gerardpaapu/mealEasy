@@ -6,7 +6,7 @@ import ImageFrontPage from '../components/ImageFrontPage'
 const ImageTextSection = ({ src, alt, text }) => (
   <div className="mb-8 flex w-full flex-col items-center sm:mb-0 sm:w-1/3">
     <ImageFrontPage src={src} alt={alt} className="w-3/4" />
-    <p className="mt-3 text-center font-bold">{text}</p>
+    <p className="mt-5 text-center font-bold">{text}</p>
   </div>
 )
 
@@ -20,7 +20,7 @@ function Landing() {
         <img
           src="Public/images/blackLogo.png"
           alt="MealEasy Logo"
-          className="w-64 sm:w-96"
+          className=" w-1/3 "
         />
         <div className="mt-20 flex space-x-4">
           <Signup />
@@ -40,7 +40,7 @@ function Landing() {
           <ImageTextSection
             src="Public/images/shopping.jpg"
             alt="shopping"
-            text="Shopping lists made easy"
+            text="Shopping lists made easy!"
           />
         </div>
       </div>

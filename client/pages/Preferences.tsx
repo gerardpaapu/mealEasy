@@ -133,7 +133,7 @@ function Preferences() {
           {/* relative flex flex-col items-center justify-center */}
           {/* flex justify-center text-4xl */}
           <div className="relative flex flex-col items-center justify-center ">
-            <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
+            <h1 className="mb-14 flex justify-center text-5xl text-headingGreen">
               Preferences
             </h1>
           </div>
@@ -142,7 +142,7 @@ function Preferences() {
             <ul className="ml-10">
               {typesArr.map((item) => (
                 <li key={item}>
-                  <h3 className="mb-5 mt-8 text-xl font-semibold text-headingGreen">
+                  <h3 className="mb-5 mt-8 text-2xl font-semibold text-headingGreen">
                     {item.charAt(0).toUpperCase() + item.slice(1)}
                   </h3>
                   <div className="container max-w-md">

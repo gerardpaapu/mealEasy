@@ -5,21 +5,6 @@ import LogoutButton from '../components/Logout'
 import Button from '../components/Button'
 import useGetUserPreference from '../hooks/useGetUserPreferences'
 
-// const preferences = [
-//   {
-//     name: 'balanced',
-//     type: 'diet',
-//   },
-//   {
-//     name: 'no-nuts',
-//     type: 'allergies',
-//   },
-//   {
-//     name: 'low-carb',
-//     type: 'diet',
-//   },
-// ]
-
 function Profile() {
   const { user } = useAuth0()
 
@@ -55,7 +40,7 @@ function Profile() {
   if (data)
     return (
       <div>
-        <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
+        <h1 className="mb-14 flex justify-center text-5xl text-headingGreen">
           Welcome {data.nickname}
         </h1>
         <div className="mt-5">
