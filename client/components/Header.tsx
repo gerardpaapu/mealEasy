@@ -24,12 +24,12 @@ export default function Header() {
       </Link>
       <div className="dropdown relative">
         <div onClick={toggleDropdown}>
-          <button className="btn bg-transparent hover:bg-buttonGreen">
+          <button className="btn border-transparent bg-transparent hover:bg-buttonGreen">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              className="inline-block h-5 w-5 stroke-current"
+              className="inline-block h-8 w-8 stroke-current"
             >
               <path
                 strokeLinecap="round"
@@ -43,23 +43,41 @@ export default function Header() {
         {isDropdownOpen && (
           <ul
             tabIndex={0}
-            className=" menu-lggit menu dropdown-content  absolute right-0 z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold text-buttonGreen shadow"
+            className=" menu dropdown-content menu-md absolute right-0 z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold text-buttonGreen shadow"
           >
-            {' '}
-            <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
-              <Link to="/home/profile">Profile</Link>
+            <li className="hover:rounded-lg  hover:bg-buttonGreen hover:text-white ">
+              <Link
+                to="/home/preferences"
+                className="focus:bg-buttonGreen focus:text-white"
+              >
+                Preferences
+              </Link>
             </li>
             <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
-              <Link to="/home/preferences">Preferences</Link>
-            </li>
-            <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
-              <Link to="/home/recipes">Recipes</Link>
+              <Link
+                to="/home/recipes"
+                className="focus:bg-buttonGreen focus:text-white"
+              >
+                Recipes
+              </Link>
             </li>
             <li className=" bg-lightGreen hover:rounded-lg hover:bg-buttonGreen hover:text-white">
-              <Link to="/home">Week Plan</Link>
+              <Link
+                to="/home"
+                className="focus:bg-buttonGreen focus:text-white"
+              >
+                Week Plan
+              </Link>
             </li>
-            <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
-              <button onClick={handleLogout}>Log out</button>
+            <li
+              className="hover:rounded-lg hover:bg-buttonGreen hover:text-white"
+              onClick={() =>
+                logout({ logoutParams: { returnTo: window.location.origin } })
+              }
+            >
+              <Link to="/" className="focus:bg-buttonGreen focus:text-white">
+                Log out
+              </Link>
             </li>
           </ul>
         )}
