@@ -9,6 +9,7 @@ import { addUser } from '../apis/backend-apis/users'
 import useGetWeekById from '../hooks/useGetWeeks'
 import { getRecipeById } from '../apis/backend-apis/recipes'
 import useGetWeeksByUser from '../hooks/useGetWeeksByUsers'
+import { updateWeek } from '../apis/backend-apis/weeks'
 
 export default function WeekPlan() {
   const initialDaysOfWeek = [
@@ -91,7 +92,7 @@ export default function WeekPlan() {
     e.dataTransfer.setData('text/plain', day)
   }
 
-  const handleDrop = (e, targetDay) => {
+  const handleDrop = (e, targetDay, week) => {
     e.preventDefault()
     const draggedDay = e.dataTransfer.getData('text/plain')
     if (draggedDay !== targetDay) {
@@ -100,9 +101,10 @@ export default function WeekPlan() {
       updatedMealPlan[targetDay] = updatedMealPlan[draggedDay]
       updatedMealPlan[draggedDay] = temp
       setMealPlan(updatedMealPlan)
-    }
 
-    console.log(mealPlan)
+      const updatedWeekPlan = { ...updatedMealPlan, id: week.id }
+      updateWeek(updatedWeekPlan)
+    }
   }
 
   const handleDragOver = (e) => {
@@ -188,7 +190,7 @@ export default function WeekPlan() {
                   className="hover:po hover:shadow-buttonGreen card card-side h-24 w-96 cursor-pointer bg-white shadow-sm hover:shadow-md"
                   draggable
                   onDragStart={(e) => handleDragStart(e, day)}
-                  onDrop={(e) => handleDrop(e, day)}
+                  onDrop={(e) => handleDrop(e, day, week)}
                   onDragOver={handleDragOver}
                   onClick={() => handleRecipeClick(index)}
                 >
