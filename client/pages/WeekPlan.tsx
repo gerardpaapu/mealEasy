@@ -9,6 +9,7 @@ import { addUser } from '../apis/backend-apis/users'
 import useGetWeekById from '../hooks/useGetWeeks'
 import { getRecipeById } from '../apis/backend-apis/recipes'
 import useGetWeeksByUser from '../hooks/useGetWeeksByUsers'
+
 import { updateWeek } from '../apis/backend-apis/weeks'
 
 export default function WeekPlan() {
@@ -30,7 +31,7 @@ export default function WeekPlan() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [weekId, setweekId] = useState(2)
   const [weekPlan, setweekPlan] = useState([])
-
+  const [shopping, setShopping] = useState(1)
   const { user } = useAuth0()
   const auth = user?.sub
   // const userId = auth ?? '-1'
@@ -119,6 +120,7 @@ export default function WeekPlan() {
   function renderRecipe(id: number) {
     setweekId(id)
     setIsDropdownOpen(false)
+    setShopping(id)
   }
 
   // Add user
@@ -154,10 +156,10 @@ export default function WeekPlan() {
           Your week
         </h1>
         <Link to="recipes">
-          <Button>Back to Recipes</Button>
+          <Button>Make a New Plan</Button>
         </Link>
       </div>
-      <div className="dropdown relative">
+      <div className="dropdown relative flex">
         <div onClick={toggleDropdown} className="mt-5">
           <button className="text-buttonGreen hover:bg-buttonGreen focus:bg-buttonGreen btn bg-transparent hover:text-white focus:text-white">
             Select your week
@@ -169,18 +171,24 @@ export default function WeekPlan() {
             className=" right-100 text-buttonGreen menu dropdown-content menu-md absolute z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
           >
             {weeksArr.map((week, index) => (
-              <li
-                key={week}
-                className="hover:bg-buttonGreen hover:rounded-lg hover:text-white"
-              >
-                <button
-                  onClick={() => renderRecipe(week)}
-                  className="focus:text-white"
-                >{`Week ${index + 1}`}</button>
-              </li>
+              <>
+                <li
+                  key={week}
+                  className="hover:bg-buttonGreen hover:rounded-lg hover:text-white"
+                >
+                  <button
+                    onClick={() => renderRecipe(week)}
+                    className="focus:text-white"
+                  >{`Week ${index + 1}`}</button>
+                </li>
+              </>
             ))}
           </ul>
         )}
+
+        <Link to={`shopping/${shopping}`}>
+          <Button className="ml-20 mt-5">Shopping List</Button>
+        </Link>
       </div>
 
       <div className="mb-20 flex">
