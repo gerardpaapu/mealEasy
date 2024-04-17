@@ -10,6 +10,13 @@ export default function Header() {
     setIsDropdownOpen(!isDropdownOpen)
   }
 
+  const handleLogout = () => {
+    const confirmLogout = window.confirm('Are you sure you want to log out?')
+    if (confirmLogout) {
+      logout({ returnTo: window.location.origin })
+    }
+  }
+
   return (
     <div className="mb-24 ml-5 mr-5 mt-10 flex h-16 items-center justify-between px-4">
       <Link to="/home">
@@ -36,8 +43,12 @@ export default function Header() {
         {isDropdownOpen && (
           <ul
             tabIndex={0}
-            className=" menu dropdown-content menu-md absolute right-0 z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold text-buttonGreen shadow"
+            className=" menu-lggit menu dropdown-content  absolute right-0 z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold text-buttonGreen shadow"
           >
+            {' '}
+            <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
+              <Link to="/home/profile">Profile</Link>
+            </li>
             <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
               <Link to="/home/preferences">Preferences</Link>
             </li>
@@ -47,13 +58,8 @@ export default function Header() {
             <li className=" bg-lightGreen hover:rounded-lg hover:bg-buttonGreen hover:text-white">
               <Link to="/home">Week Plan</Link>
             </li>
-            <li
-              className="hover:rounded-lg hover:bg-buttonGreen hover:text-white"
-              onClick={() =>
-                logout({ logoutParams: { returnTo: window.location.origin } })
-              }
-            >
-              <Link to="/">Log out</Link>
+            <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
+              <button onClick={handleLogout}>Log out</button>
             </li>
           </ul>
         )}
