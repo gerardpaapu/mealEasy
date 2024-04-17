@@ -9,7 +9,8 @@ import { addUser } from '../apis/backend-apis/users'
 import useGetWeekById from '../hooks/useGetWeeks'
 import { getRecipeById } from '../apis/backend-apis/recipes'
 import useGetWeeksByUser from '../hooks/useGetWeeksByUsers'
-import ShoppingList from './ShoppingList'
+
+import { updateWeek } from '../apis/backend-apis/weeks'
 
 export default function WeekPlan() {
   const initialDaysOfWeek = [
