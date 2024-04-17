@@ -67,6 +67,11 @@ export default function WeekPlan() {
   }, [week, userWeeks])
 
   useEffect(() => {
+    const arr = userWeeks?.map((item) => item.id)
+    setweekId(arr?.at(-1))
+  }, [userWeeks])
+
+  useEffect(() => {
     const getRecipes = async () => {
       try {
         const promises = Object.values(mealPlan).map((item) =>
