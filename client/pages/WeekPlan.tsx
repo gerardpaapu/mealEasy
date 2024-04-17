@@ -8,6 +8,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { addUser } from '../apis/backend-apis/users'
 import useGetWeekById from '../hooks/useGetWeeks'
 import { getRecipeById } from '../apis/backend-apis/recipes'
+import useGetWeeksByUser from '../hooks/useGetWeeksByUsers'
 
 export default function WeekPlan() {
   const initialDaysOfWeek = [
@@ -25,7 +26,18 @@ export default function WeekPlan() {
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(null)
   const [recipes, setRecipes] = useState([])
   const [selectedRecipe, setSelectedRecipe] = useState(null)
-  const { data: week } = useGetWeekById(2)
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [weekId, setweekId] = useState(2)
+  const [weekPlan, setweekPlan] = useState([])
+
+  const { user } = useAuth0()
+  const auth = user?.sub
+  // const userId = auth ?? '-1'
+
+  const weeksArr = weekPlan?.map((item) => item.id)
+
+  const { data: week } = useGetWeekById(weekId)
+  const { data: userWeeks } = useGetWeeksByUser(auth)
 
   useEffect(() => {
     if (week) {
@@ -46,7 +58,11 @@ export default function WeekPlan() {
         }, {}),
       )
     }
-  }, [week])
+
+    if (userWeeks) {
+      setweekPlan(userWeeks)
+    }
+  }, [week, userWeeks])
 
   useEffect(() => {
     const getRecipes = async () => {
@@ -62,6 +78,10 @@ export default function WeekPlan() {
     }
     getRecipes()
   }, [mealPlan])
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen)
+  }
 
   const handleRecipeClick = (index) => {
     setSelectedRecipeIndex(index)
@@ -87,9 +107,13 @@ export default function WeekPlan() {
     e.preventDefault()
   }
 
+  function renderRecipe(id: number) {
+    setweekId(id)
+  }
+
   // Add user
-  const { user } = useAuth0()
-  const auth = user?.sub
+  // const { user } = useAuth0()
+  // const auth = user?.sub
   const { data, isLoading, isError } = useGetUserById(auth)
 
   useEffect(() => {
@@ -115,6 +139,31 @@ export default function WeekPlan() {
 
   return (
     <div>
+      <div className="dropdown relative">
+        <div onClick={toggleDropdown}>
+          <button className="hover:bg-buttonGreen text-buttonGreen btn bg-transparent focus:text-white">
+            Select your week
+          </button>
+        </div>
+        {isDropdownOpen && (
+          <ul
+            tabIndex={0}
+            className=" text-buttonGreen right-100 menu dropdown-content menu-md absolute z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
+          >
+            {weeksArr.map((week) => (
+              <li
+                key={week}
+                className="hover:bg-buttonGreen hover:rounded-lg hover:text-white"
+              >
+                <button
+                  onClick={() => renderRecipe(week)}
+                  className="focus:text-white"
+                >{`Week ${week}`}</button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
       <div className="relative flex flex-col items-center justify-center">
         <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
           Your week
@@ -134,7 +183,7 @@ export default function WeekPlan() {
                 </h2>
 
                 <div
-                  className="hover:po card card-side h-24 w-96 cursor-pointer bg-white shadow-sm hover:shadow-md hover:shadow-buttonGreen"
+                  className="hover:po hover:shadow-buttonGreen card card-side h-24 w-96 cursor-pointer bg-white shadow-sm hover:shadow-md"
                   draggable
                   onDragStart={(e) => handleDragStart(e, day)}
                   onDrop={(e) => handleDrop(e, day)}
