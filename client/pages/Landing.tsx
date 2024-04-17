@@ -6,17 +6,17 @@ import ImageFrontPage from '../components/ImageFrontPage'
 const ImageTextSection = ({ src, alt, text }) => (
   <div className="mb-8 flex w-full flex-col items-center sm:mb-0 sm:w-1/3">
     <ImageFrontPage src={src} alt={alt} className="w-3/4" />
-    <p className="mt-5 text-center font-bold">{text}</p>
+    <p className=" mt-5 text-center font-bold">{text}</p>
   </div>
 )
 
 function Landing() {
   return (
-    <div className="landing-body min-h-screen w-screen">
-      <div className="flex justify-end">
+    <div className="landing-body  h-auto w-screen">
+      {/* <div className="flex justify-end">
         <div className="mr-10 mt-10"></div>
-      </div>
-      <div className="mt-20 flex flex-col items-center justify-center sm:mt-40">
+      </div> */}
+      <div className=" mt-20 flex flex-col items-center justify-center sm:mt-40">
         <img
           src="Public/images/blackLogo.png"
           alt="MealEasy Logo"
