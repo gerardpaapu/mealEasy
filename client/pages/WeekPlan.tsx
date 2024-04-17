@@ -101,6 +101,8 @@ export default function WeekPlan() {
       updatedMealPlan[draggedDay] = temp
       setMealPlan(updatedMealPlan)
     }
+
+    console.log(mealPlan)
   }
 
   const handleDragOver = (e) => {
