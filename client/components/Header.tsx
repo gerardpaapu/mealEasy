@@ -6,6 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const { logout } = useAuth0()
+
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen)
   }
@@ -14,6 +15,7 @@ export default function Header() {
     const confirmLogout = window.confirm('Are you sure you want to log out?')
     if (confirmLogout) {
       logout({ returnTo: window.location.origin })
+      setIsDropdownOpen(false) // Close dropdown when logout is clicked
     }
     console.log('value', confirmLogout)
   }
@@ -25,7 +27,7 @@ export default function Header() {
       </Link>
       <div className="dropdown relative">
         <div onClick={toggleDropdown}>
-          <button className="hover:bg-buttonGreen btn border-transparent bg-transparent">
+          <button className="btn border-transparent bg-transparent hover:bg-buttonGreen">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -44,41 +46,45 @@ export default function Header() {
         {isDropdownOpen && (
           <ul
             tabIndex={0}
-            className=" text-buttonGreen menu dropdown-content menu-lg absolute right-0 z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
+            className=" menu dropdown-content menu-lg absolute right-0 z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold text-buttonGreen shadow"
           >
-            <li className="hover:bg-buttonGreen hover:rounded-lg hover:text-white">
+            <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
               <Link
                 to="/home/profile"
                 className="focus:bg-buttonGreen focus:text-white"
+                onClick={() => setIsDropdownOpen(false)}
               >
                 Profile
               </Link>
             </li>
-            <li className="hover:bg-buttonGreen  hover:rounded-lg hover:text-white ">
+            <li className="hover:rounded-lg  hover:bg-buttonGreen hover:text-white ">
               <Link
                 to="/home/preferences"
                 className="focus:bg-buttonGreen focus:text-white"
+                onClick={() => setIsDropdownOpen(false)}
               >
                 Preferences
               </Link>
             </li>
-            <li className="hover:bg-buttonGreen hover:rounded-lg hover:text-white">
+            <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
               <Link
                 to="/home/recipes"
                 className="focus:bg-buttonGreen focus:text-white"
+                onClick={() => setIsDropdownOpen(false)}
               >
                 Recipes
               </Link>
             </li>
-            <li className=" bg-lightGreen hover:bg-buttonGreen hover:rounded-lg hover:text-white">
+            <li className=" bg-lightGreen hover:rounded-lg hover:bg-buttonGreen hover:text-white">
               <Link
                 to="/home"
                 className="focus:bg-buttonGreen focus:text-white"
+                onClick={() => setIsDropdownOpen(false)}
               >
                 Week Plan
               </Link>
             </li>
-            <li className="hover:bg-buttonGreen hover:rounded-lg hover:text-white">
+            <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
               <button onClick={handleLogout}>Log out</button>
             </li>
           </ul>

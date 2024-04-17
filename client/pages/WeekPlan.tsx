@@ -109,6 +109,7 @@ export default function WeekPlan() {
 
   function renderRecipe(id: number) {
     setweekId(id)
+    setIsDropdownOpen(false)
   }
 
   // Add user
@@ -149,19 +150,19 @@ export default function WeekPlan() {
       </div>
       <div className="dropdown relative">
         <div onClick={toggleDropdown} className="mt-5">
-          <button className="hover:bg-buttonGreen text-buttonGreen focus:bg-buttonGreen btn bg-transparent hover:text-white focus:text-white">
+          <button className="btn bg-transparent text-buttonGreen hover:bg-buttonGreen hover:text-white focus:bg-buttonGreen focus:text-white">
             Select your week
           </button>
         </div>
         {isDropdownOpen && (
           <ul
             tabIndex={0}
-            className=" text-buttonGreen right-100 menu dropdown-content menu-md absolute z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
+            className=" right-100 menu dropdown-content menu-md absolute z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold text-buttonGreen shadow"
           >
             {weeksArr.map((week, index) => (
               <li
                 key={week}
-                className="hover:bg-buttonGreen hover:rounded-lg hover:text-white"
+                className="hover:rounded-lg hover:bg-buttonGreen hover:text-white"
               >
                 <button
                   onClick={() => renderRecipe(week)}
@@ -183,7 +184,7 @@ export default function WeekPlan() {
                 </h2>
 
                 <div
-                  className="hover:po hover:shadow-buttonGreen card card-side h-24 w-96 cursor-pointer bg-white shadow-sm hover:shadow-md"
+                  className="hover:po card card-side h-24 w-96 cursor-pointer bg-white shadow-sm hover:shadow-md hover:shadow-buttonGreen"
                   draggable
                   onDragStart={(e) => handleDragStart(e, day)}
                   onDrop={(e) => handleDrop(e, day)}
