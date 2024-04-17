@@ -151,7 +151,7 @@ export default function WeekPlan() {
           Your week
         </h1>
         <Link to="recipes">
-          <Button>Back to Recipes</Button>
+          <Button>Make a New Plan</Button>
         </Link>
       </div>
       <div className="dropdown relative flex">
