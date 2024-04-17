@@ -66,6 +66,11 @@ export default function WeekPlan() {
   }, [week, userWeeks])
 
   useEffect(() => {
+    const arr = userWeeks?.map((item) => item.id)
+    setweekId(arr?.at(-1))
+  }, [userWeeks])
+
+  useEffect(() => {
     const getRecipes = async () => {
       try {
         const promises = Object.values(mealPlan).map((item) =>
@@ -154,19 +159,19 @@ export default function WeekPlan() {
       </div>
       <div className="dropdown relative">
         <div onClick={toggleDropdown} className="mt-5">
-          <button className="btn bg-transparent text-buttonGreen hover:bg-buttonGreen hover:text-white focus:bg-buttonGreen focus:text-white">
+          <button className="text-buttonGreen hover:bg-buttonGreen focus:bg-buttonGreen btn bg-transparent hover:text-white focus:text-white">
             Select your week
           </button>
         </div>
         {isDropdownOpen && (
           <ul
             tabIndex={0}
-            className=" right-100 menu dropdown-content menu-md absolute z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold text-buttonGreen shadow"
+            className=" right-100 text-buttonGreen menu dropdown-content menu-md absolute z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
           >
             {weeksArr.map((week, index) => (
               <li
                 key={week}
-                className="hover:rounded-lg hover:bg-buttonGreen hover:text-white"
+                className="hover:bg-buttonGreen hover:rounded-lg hover:text-white"
               >
                 <button
                   onClick={() => renderRecipe(week)}
@@ -188,7 +193,7 @@ export default function WeekPlan() {
                 </h2>
 
                 <div
-                  className="hover:po card card-side h-24 w-96 cursor-pointer bg-white shadow-sm hover:shadow-md hover:shadow-buttonGreen"
+                  className="hover:po hover:shadow-buttonGreen card card-side h-24 w-96 cursor-pointer bg-white shadow-sm hover:shadow-md"
                   draggable
                   onDragStart={(e) => handleDragStart(e, day)}
                   onDrop={(e) => handleDrop(e, day, week)}
