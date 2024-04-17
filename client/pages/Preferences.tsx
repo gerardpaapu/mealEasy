@@ -40,7 +40,7 @@ function Preferences() {
       const state: BtnColor = {}
       preferences.forEach((item) => {
         state[item.name] =
-          'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-40 shadow-none hover:bg-transparent'
+          'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-32 shadow-none hover:bg-transparent'
       })
       setBtnColor(state)
     }
@@ -69,7 +69,7 @@ function Preferences() {
   function updatePreferences(pref: Preferencetype) {
     if (
       btncolor[pref.name] ===
-      'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-40 shadow-none hover:bg-transparent'
+      'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-32 shadow-none hover:bg-transparent'
     ) {
       setUserPreferences([
         ...userPreferences,
@@ -90,9 +90,9 @@ function Preferences() {
       ...btncolor,
       [pref.name]:
         btncolor[pref.name] ===
-        'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-40 shadow-none hover:bg-transparent'
+        'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-32 shadow-none hover:bg-transparent'
           ? 'shadow-lg btn btn-primary text-lightGreen'
-          : 'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-40 shadow-none hover:bg-transparent',
+          : 'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-32 shadow-none hover:bg-transparent',
     })
     updatePreferences(pref)
   }
