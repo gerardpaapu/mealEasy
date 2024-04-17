@@ -158,7 +158,7 @@ export default function WeekPlan() {
             tabIndex={0}
             className=" text-buttonGreen right-100 menu dropdown-content menu-md absolute z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
           >
-            {weeksArr.map((week) => (
+            {weeksArr.map((week, index) => (
               <li
                 key={week}
                 className="hover:bg-buttonGreen hover:rounded-lg hover:text-white"
@@ -166,7 +166,7 @@ export default function WeekPlan() {
                 <button
                   onClick={() => renderRecipe(week)}
                   className="focus:text-white"
-                >{`Week ${week}`}</button>
+                >{`Week ${index + 1}`}</button>
               </li>
             ))}
           </ul>
