@@ -44,7 +44,7 @@ export default function Header() {
         {isDropdownOpen && (
           <ul
             tabIndex={0}
-            className=" text-buttonGreen menu dropdown-content menu-md absolute right-0 z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
+            className=" text-buttonGreen menu dropdown-content menu-lg absolute right-0 z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
           >
             <li className="hover:bg-buttonGreen hover:rounded-lg hover:text-white">
               <Link to="/home/profile">Profile</Link>
