@@ -92,7 +92,7 @@ export default function WeekPlan() {
     e.dataTransfer.setData('text/plain', day)
   }
 
-  const handleDrop = (e, targetDay) => {
+  const handleDrop = (e, targetDay, week) => {
     e.preventDefault()
     const draggedDay = e.dataTransfer.getData('text/plain')
     if (draggedDay !== targetDay) {
@@ -101,6 +101,9 @@ export default function WeekPlan() {
       updatedMealPlan[targetDay] = updatedMealPlan[draggedDay]
       updatedMealPlan[draggedDay] = temp
       setMealPlan(updatedMealPlan)
+
+      const updatedWeekPlan = { ...updatedMealPlan, id: week.id }
+      updateWeek(updatedWeekPlan)
     }
   }
 
@@ -152,14 +155,14 @@ export default function WeekPlan() {
       </div>
       <div className="dropdown relative flex">
         <div onClick={toggleDropdown} className="mt-5">
-          <button className="hover:bg-buttonGreen text-buttonGreen focus:bg-buttonGreen btn bg-transparent hover:text-white focus:text-white">
+          <button className="text-buttonGreen hover:bg-buttonGreen focus:bg-buttonGreen btn bg-transparent hover:text-white focus:text-white">
             Select your week
           </button>
         </div>
         {isDropdownOpen && (
           <ul
             tabIndex={0}
-            className=" text-buttonGreen right-100 menu dropdown-content menu-md absolute z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
+            className=" right-100 text-buttonGreen menu dropdown-content menu-md absolute z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
           >
             {weeksArr.map((week, index) => (
               <>
@@ -195,7 +198,7 @@ export default function WeekPlan() {
                   className="hover:po hover:shadow-buttonGreen card card-side h-24 w-96 cursor-pointer bg-white shadow-sm hover:shadow-md"
                   draggable
                   onDragStart={(e) => handleDragStart(e, day)}
-                  onDrop={(e) => handleDrop(e, day)}
+                  onDrop={(e) => handleDrop(e, day, week)}
                   onDragOver={handleDragOver}
                   onClick={() => handleRecipeClick(index)}
                 >
