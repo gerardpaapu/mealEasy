@@ -141,9 +141,17 @@ export default function WeekPlan() {
 
   return (
     <div>
+      <div className="relative flex flex-col items-center justify-center">
+        <h1 className="mb-14 flex justify-center text-5xl text-headingGreen">
+          Your week
+        </h1>
+        <Link to="recipes">
+          <Button>Back to Recipes</Button>
+        </Link>
+      </div>
       <div className="dropdown relative">
-        <div onClick={toggleDropdown}>
-          <button className="hover:bg-buttonGreen text-buttonGreen btn bg-transparent focus:text-white">
+        <div onClick={toggleDropdown} className="mt-5">
+          <button className="hover:bg-buttonGreen text-buttonGreen focus:bg-buttonGreen btn bg-transparent hover:text-white focus:text-white">
             Select your week
           </button>
         </div>
@@ -152,7 +160,7 @@ export default function WeekPlan() {
             tabIndex={0}
             className=" text-buttonGreen right-100 menu dropdown-content menu-md absolute z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
           >
-            {weeksArr.map((week) => (
+            {weeksArr.map((week, index) => (
               <li
                 key={week}
                 className="hover:bg-buttonGreen hover:rounded-lg hover:text-white"
@@ -160,19 +168,11 @@ export default function WeekPlan() {
                 <button
                   onClick={() => renderRecipe(week)}
                   className="focus:text-white"
-                >{`Week ${week}`}</button>
+                >{`Week ${index + 1}`}</button>
               </li>
             ))}
           </ul>
         )}
-      </div>
-      <div className="relative flex flex-col items-center justify-center">
-        <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
-          Your week
-        </h1>
-        <Link to="recipes">
-          <Button>Back to Recipes</Button>
-        </Link>
       </div>
 
       <div className="mb-20 flex">
