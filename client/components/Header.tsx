@@ -15,6 +15,7 @@ export default function Header() {
     if (confirmLogout) {
       logout({ returnTo: window.location.origin })
     }
+    console.log('value', confirmLogout)
   }
 
   return (
@@ -24,7 +25,7 @@ export default function Header() {
       </Link>
       <div className="dropdown relative">
         <div onClick={toggleDropdown}>
-          <button className="btn border-transparent bg-transparent hover:bg-buttonGreen">
+          <button className="hover:bg-buttonGreen btn border-transparent bg-transparent">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -43,9 +44,12 @@ export default function Header() {
         {isDropdownOpen && (
           <ul
             tabIndex={0}
-            className=" menu dropdown-content menu-md absolute right-0 z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold text-buttonGreen shadow"
+            className=" text-buttonGreen menu dropdown-content menu-md absolute right-0 z-[2] mt-3 w-52 rounded-box bg-base-100 p-2 font-bold shadow"
           >
-            <li className="hover:rounded-lg  hover:bg-buttonGreen hover:text-white ">
+            <li className="hover:bg-buttonGreen hover:rounded-lg hover:text-white">
+              <Link to="/home/profile">Profile</Link>
+            </li>
+            <li className="hover:bg-buttonGreen  hover:rounded-lg hover:text-white ">
               <Link
                 to="/home/preferences"
                 className="focus:bg-buttonGreen focus:text-white"
@@ -53,7 +57,7 @@ export default function Header() {
                 Preferences
               </Link>
             </li>
-            <li className="hover:rounded-lg hover:bg-buttonGreen hover:text-white">
+            <li className="hover:bg-buttonGreen hover:rounded-lg hover:text-white">
               <Link
                 to="/home/recipes"
                 className="focus:bg-buttonGreen focus:text-white"
@@ -61,7 +65,7 @@ export default function Header() {
                 Recipes
               </Link>
             </li>
-            <li className=" bg-lightGreen hover:rounded-lg hover:bg-buttonGreen hover:text-white">
+            <li className=" bg-lightGreen hover:bg-buttonGreen hover:rounded-lg hover:text-white">
               <Link
                 to="/home"
                 className="focus:bg-buttonGreen focus:text-white"
@@ -69,15 +73,8 @@ export default function Header() {
                 Week Plan
               </Link>
             </li>
-            <li
-              className="hover:rounded-lg hover:bg-buttonGreen hover:text-white"
-              onClick={() =>
-                logout({ logoutParams: { returnTo: window.location.origin } })
-              }
-            >
-              <Link to="/" className="focus:bg-buttonGreen focus:text-white">
-                Log out
-              </Link>
+            <li className="hover:bg-buttonGreen hover:rounded-lg hover:text-white">
+              <button onClick={handleLogout}>Log out</button>
             </li>
           </ul>
         )}
