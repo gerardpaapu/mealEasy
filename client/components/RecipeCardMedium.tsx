@@ -17,6 +17,12 @@ export default function RecipeCardMedium() {
     setInput(e.target.value)
   }
 
+  function handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      handleFilter()
+    }
+  }
+
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(null)
   const [meals, setMeals] = useState([])
@@ -176,7 +182,8 @@ export default function RecipeCardMedium() {
           <label className=" mb-5 flex items-center gap-2">
             <input
               onChange={handleChange}
-              className="focus:border-buttonGreen mt-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 focus:outline-none"
+              onKeyDown={handleKeyPress}
+              className="mt-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 focus:border-buttonGreen focus:outline-none"
               placeholder="Search"
               value={input}
             />
@@ -222,9 +229,9 @@ export default function RecipeCardMedium() {
                 <div
                   className={`card card-compact relative h-64 cursor-pointer ${
                     isMealSelected(index)
-                      ? 'border-buttonGreen border-2 '
+                      ? 'border-2 border-buttonGreen '
                       : 'border-transparent'
-                  } hover:shadow-buttonGreen bg-white shadow-sm hover:shadow-md ${isSelectionFull && !isMealSelected(index) ? 'opacity-50 hover:shadow-transparent' : ''}`}
+                  } bg-white shadow-sm hover:shadow-md hover:shadow-buttonGreen ${isSelectionFull && !isMealSelected(index) ? 'opacity-50 hover:shadow-transparent' : ''}`}
                 >
                   <figure onClick={() => handleShowRecipeDetail(index)}>
                     <img
@@ -263,7 +270,7 @@ export default function RecipeCardMedium() {
             More Recipes
           </Button>
           {isSelectionFull && (
-            <div className="bg-buttonGreen fixed left-0 top-0 w-full py-2 text-center text-white opacity-90">
+            <div className="fixed left-0 top-0 w-full bg-buttonGreen py-2 text-center text-white opacity-90">
               You have selected seven meals. You cannot select more.
             </div>
           )}
