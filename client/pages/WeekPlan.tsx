@@ -31,7 +31,7 @@ export default function WeekPlan() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [weekId, setweekId] = useState(2)
   const [weekPlan, setweekPlan] = useState([])
-  const [shopping, setShopping] = useState(1)
+  // const [shopping, setShopping] = useState(1)
   const { user } = useAuth0()
   const auth = user?.sub
   // const userId = auth ?? '-1'
@@ -186,7 +186,7 @@ export default function WeekPlan() {
           </ul>
         )}
 
-        <Link to={`shopping/${shopping}`}>
+        <Link to={`shopping/${weekId}`}>
           <Button className="ml-20 mt-5">Shopping List</Button>
         </Link>
       </div>
