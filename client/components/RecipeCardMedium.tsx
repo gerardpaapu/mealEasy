@@ -17,6 +17,12 @@ export default function RecipeCardMedium() {
     setInput(e.target.value)
   }
 
+  function handleKeyPress(e) {
+    if (e.key === 'Enter') {
+      handleFilter()
+    }
+  }
+
   const [selectedItems, setSelectedItems] = useState([])
   const [selectedRecipeIndex, setSelectedRecipeIndex] = useState(null)
   const [meals, setMeals] = useState([])
@@ -178,6 +184,10 @@ export default function RecipeCardMedium() {
           <label className=" mb-5 flex items-center gap-2">
             <input
               onChange={handleChange}
+
+
+              onKeyDown={handleKeyPress}
+
               className="mt-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 focus:border-buttonGreen focus:outline-none"
               placeholder="Search"
               value={input}
@@ -186,7 +196,7 @@ export default function RecipeCardMedium() {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
-              className="h-4 w-4 opacity-70"
+              className="h-4 w-4 cursor-pointer opacity-70"
               onClick={() => handleFilter()}
             >
               <path
