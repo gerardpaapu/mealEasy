@@ -45,6 +45,7 @@ export default function RecipeCardMedium() {
         obj.name = item.recipe.label
         obj.image = item.recipe.images
         obj.ingredients = item.recipe.ingredientLines
+        obj.url = item.recipe.url
         return obj
       })
       // Use setMeals to trigger a re-render with the updated value
@@ -97,11 +98,11 @@ export default function RecipeCardMedium() {
         const arr = await getRecipeByName(meal.name)
 
         if (arr.length === 0) {
-          const obj: Recipes = { name: '', ingredients: '', image: '' }
+          const obj: Recipes = { name: '', ingredients: '', image: '', url: '' }
           obj.name = meal.name
           obj.image = meal.image.LARGE.url
           obj.ingredients = meal.ingredients.join('_')
-          console.log(obj)
+          obj.url = meal.url
           await addARecipe(obj)
         }
       }),
@@ -111,6 +112,7 @@ export default function RecipeCardMedium() {
     await Promise.all(
       mealsArr.map(async (meal, i) => {
         const arr = await getRecipeByName(meal.name)
+        console.log(arr)
         const id = arr[0].id
         weekObj[week[i]] = id
       }),
@@ -176,7 +178,7 @@ export default function RecipeCardMedium() {
           <label className=" mb-5 flex items-center gap-2">
             <input
               onChange={handleChange}
-              className="focus:border-buttonGreen mt-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 focus:outline-none"
+              className="mt-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-700 focus:border-buttonGreen focus:outline-none"
               placeholder="Search"
               value={input}
             />
@@ -222,9 +224,9 @@ export default function RecipeCardMedium() {
                 <div
                   className={`card card-compact relative h-64 cursor-pointer ${
                     isMealSelected(index)
-                      ? 'border-buttonGreen border-2 '
+                      ? 'border-2 border-buttonGreen '
                       : 'border-transparent'
-                  } hover:shadow-buttonGreen bg-white shadow-sm hover:shadow-md ${isSelectionFull && !isMealSelected(index) ? 'opacity-50 hover:shadow-transparent' : ''}`}
+                  } bg-white shadow-sm hover:shadow-md hover:shadow-buttonGreen ${isSelectionFull && !isMealSelected(index) ? 'opacity-50 hover:shadow-transparent' : ''}`}
                 >
                   <figure onClick={() => handleShowRecipeDetail(index)}>
                     <img
@@ -263,7 +265,7 @@ export default function RecipeCardMedium() {
             More Recipes
           </Button>
           {isSelectionFull && (
-            <div className="bg-buttonGreen fixed left-0 top-0 w-full py-2 text-center text-white opacity-90">
+            <div className="fixed left-0 top-0 w-full bg-buttonGreen py-2 text-center text-white opacity-90">
               You have selected seven meals. You cannot select more.
             </div>
           )}
