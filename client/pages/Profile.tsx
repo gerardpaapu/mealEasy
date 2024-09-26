@@ -5,21 +5,6 @@ import LogoutButton from '../components/Logout'
 import Button from '../components/Button'
 import useGetUserPreference from '../hooks/useGetUserPreferences'
 
-// const preferences = [
-//   {
-//     name: 'balanced',
-//     type: 'diet',
-//   },
-//   {
-//     name: 'no-nuts',
-//     type: 'allergies',
-//   },
-//   {
-//     name: 'low-carb',
-//     type: 'diet',
-//   },
-// ]
-
 function Profile() {
   const { user } = useAuth0()
 
@@ -55,15 +40,15 @@ function Profile() {
   if (data)
     return (
       <div>
-        <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
+        <h1 className="mb-14 flex justify-center text-5xl text-headingGreen">
           Welcome {data.nickname}
         </h1>
         <div className="mt-5">
-          <h2 className="mb-5 ml-10 text-2xl text-headingGreen">
+          <h2 className="mb-5 ml-10 text-2xl font-semibold text-headingGreen">
             My Personal Details
           </h2>
 
-          <div className="ml-20">
+          <div className="mb-2 ml-20">
             <div className="flex">
               <p className="mb-2 text-headingGreen">
                 <strong>Nickname:</strong>
@@ -94,12 +79,14 @@ function Profile() {
           </Button>
           <LogoutButton>Log Out</LogoutButton>
         </div>
-        <div className="mt-5">
-          <h2 className="ml-10 text-2xl text-headingGreen">Preferences</h2>
+        <div className="mt-20">
+          <h2 className="ml-10 text-2xl font-semibold text-headingGreen">
+            Preferences
+          </h2>
           <ul className="ml-20">
             {typesArr.map((item) => (
               <li key={item}>
-                <h3 className="mb-3 mt-5 text-xl text-headingGreen">
+                <h3 className="mb-3 mt-5 text-xl font-semibold text-headingGreen">
                   {item.charAt(0).toUpperCase() + item.slice(1)}
                 </h3>
                 <ul className="ml-5">
@@ -121,7 +108,7 @@ function Profile() {
             ))}
           </ul>
         </div>
-        <Button className="ml-10">
+        <Button className="ml-10 mt-5">
           <Link to="/home/preferences">Edit Preferences</Link>
         </Button>
       </div>

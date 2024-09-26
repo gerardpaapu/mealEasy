@@ -7,7 +7,7 @@ import Recipes from './pages/Recipes'
 import Preferences from './pages/Preferences'
 import App from './components/App'
 import WeekPlan from './pages/WeekPlan'
-
+import ShoppingList from './pages/ShoppingList'
 
 const routes = createRoutesFromElements(
   <>
@@ -18,6 +18,7 @@ const routes = createRoutesFromElements(
       <Route path="profile/edit" element={<EditProfile />} />
       <Route path="recipes" element={<Recipes />} />
       <Route path="preferences" element={<Preferences />} />
+      <Route path="shopping/:id" element={<ShoppingList />} />
     </Route>
   </>,
 )

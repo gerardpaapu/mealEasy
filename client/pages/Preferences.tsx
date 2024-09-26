@@ -2,7 +2,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { addUser } from '../apis/backend-apis/users'
 import { User } from '../../models/users'
 
-import { useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
 import { Preferences as Preferencetype } from '../../models/preferences'
 import { UserPreferences } from '../../models/userPreferences'
 
@@ -21,6 +21,7 @@ interface BtnColor {
 function Preferences() {
   const [btncolor, setBtnColor] = useState<BtnColor>({})
   const [userPreferences, setUserPreferences] = useState<UserPreferences[]>([])
+
   const { user, isAuthenticated } = useAuth0()
   const navigate = useNavigate()
 
@@ -38,7 +39,8 @@ function Preferences() {
     if (preferences) {
       const state: BtnColor = {}
       preferences.forEach((item) => {
-        state[item.name] = 'bg-yellow-500'
+        state[item.name] =
+          'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-32 shadow-none hover:bg-transparent'
       })
       setBtnColor(state)
     }
@@ -65,14 +67,17 @@ function Preferences() {
   }
 
   function updatePreferences(pref: Preferencetype) {
-    if (btncolor[pref.name] === 'bg-yellow-500') {
+    if (
+      btncolor[pref.name] ===
+      'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-32 shadow-none hover:bg-transparent'
+    ) {
       setUserPreferences([
         ...userPreferences,
         { user_id: user?.sub, preference_id: pref.id },
       ])
     }
 
-    if (btncolor[pref.name] === 'bg-green-600') {
+    if (btncolor[pref.name] === 'shadow-lg btn btn-primary text-lightGreen') {
       const arr = userPreferences.filter(
         (item) => item.preference_id !== pref.id,
       )
@@ -84,9 +89,10 @@ function Preferences() {
     setBtnColor({
       ...btncolor,
       [pref.name]:
-        btncolor[pref.name] === 'bg-yellow-500'
-          ? 'bg-green-600'
-          : 'bg-yellow-500',
+        btncolor[pref.name] ===
+        'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-32 shadow-none hover:bg-transparent'
+          ? 'shadow-lg btn btn-primary text-lightGreen'
+          : 'hover:text-buttonGreen border-buttonGreen text-buttonGreen hover:border-buttonGreen btn btn-outline w-32 shadow-none hover:bg-transparent',
     })
     updatePreferences(pref)
   }
@@ -127,41 +133,44 @@ function Preferences() {
           {/* relative flex flex-col items-center justify-center */}
           {/* flex justify-center text-4xl */}
           <div className="relative flex flex-col items-center justify-center ">
-            <h1 className="mb-14 flex justify-center text-4xl text-headingGreen">
+            <h1 className="mb-14 flex justify-center text-5xl text-headingGreen">
               Preferences
             </h1>
+          </div>
 
-            <Button onClick={handleSave} className="w-24">
+          <div>
+            <ul className="ml-10">
+              {typesArr.map((item) => (
+                <li key={item}>
+                  <h3 className="mb-5 mt-8 text-2xl font-semibold text-headingGreen">
+                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                  </h3>
+                  <div className="container max-w-md">
+                    <ul className="ml-5 grid grid-cols-3 gap-10">
+                      {preferences.map((pref) =>
+                        pref.type === item ? (
+                          <li key={pref.name}>
+                            <button
+                              onClick={() => handleClick(pref)}
+                              className={` ${btncolor[pref.name]} w-32`}
+                            >
+                              {pref.name.charAt(0).toUpperCase() +
+                                pref.name.slice(1)}
+                            </button>
+                          </li>
+                        ) : null,
+                      )}
+                    </ul>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="ml-28 w-2/5">
+            <Button onClick={handleSave} className="ml-24 mt-10 w-40">
               Save
             </Button>
           </div>
-
-          <ul className="ml-10">
-            {typesArr.map((item) => (
-              <li key={item}>
-                <h3 className="mb-3 mt-5 text-xl text-headingGreen">
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
-                </h3>
-                <div className="container max-w-md">
-                  <ul className="ml-5 grid grid-cols-3 gap-4">
-                    {preferences.map((pref) =>
-                      pref.type === item ? (
-                        <li key={pref.name} className="mb-2">
-                          <button
-                            onClick={() => handleClick(pref)}
-                            className={`w-full rounded-lg border-none ${btncolor[pref.name]} px-4 py-1 font-bold`}
-                          >
-                            {pref.name.charAt(0).toUpperCase() +
-                              pref.name.slice(1)}
-                          </button>
-                        </li>
-                      ) : null,
-                    )}
-                  </ul>
-                </div>
-              </li>
-            ))}
-          </ul>
         </div>
       </>
     )
